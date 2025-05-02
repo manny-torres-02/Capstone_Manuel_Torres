@@ -1,67 +1,56 @@
-
 # Project Title
 
 RootedReach
- 
 
- ## Overview
+## Overview
 
-  RootedReach is a volunteer management dashboard. This will help to keep track of volunteers, and keep everyone updated of who is working on what, where and when. 
-
-  
+RootedReach is a volunteer management dashboard. This will help to keep track of volunteers, and keep everyone updated of who is working on what, where and when.
 
 ### Problem
 
-Community organizations have a mission to serve the community and to offer a lifeline or means of communication between the district and the city. These neighborhood organizations in Milwaukee have a direct means of communication with the local alderman, and act as a medium to show the problems of the district to local government. What these organizations often lack is a clear calendar of events, managing volunteers in a quick and effective manner, and consistent ability to perform outreach with the community.  
+Community organizations have a mission to serve the community and to offer a lifeline or means of communication between the district and the city. These neighborhood organizations in Milwaukee have a direct means of communication with the local alderman, and act as a medium to show the problems of the district to local government. What these organizations often lack is a clear calendar of events, managing volunteers in a quick and effective manner, and consistent ability to perform outreach with the community.
 
-The Board maintains outreach through far 10+ groups and  and beyond 20+ email groups that makes it very difficult to make contact with the right group. This can be a bit of a confusing task to remember which group is the most updated for the current purpose. On top of this managing a rotating list of volunteers that want to help out on very specific events can be very convoluted.
-  
+The Board maintains outreach through far 10+ groups and and beyond 20+ email groups that makes it very difficult to make contact with the right group. This can be a bit of a confusing task to remember which group is the most updated for the current purpose. On top of this managing a rotating list of volunteers that want to help out on very specific events can be very convoluted.
 
 ### User Profile
-
-  
 
 - Board Member
 
 - Create contact lists
 
-- Manage assigning volunteers to specific events 
+- Manage assigning volunteers to specific events
 
 - Manage an updateable calendar
 
-- Manage outreach towards specified groups 
-
-  
+- Manage outreach towards specified groups
 
 ### Features
 
-- As a user I want to be able to create new contacts 
+- As a user I want to be able to create new contacts
 
-	- Contact Data can have names, phones, emails, committees they are on, and type of events they want to volunteer for
+  - Contact Data can have names, phones, emails, committees they are on, and type of events they want to volunteer for
 
-	- The necessary contact field will be their name. Some community members prefer their privacy concerning the other data. 
+  - The necessary contact field will be their name. Some community members prefer their privacy concerning the other data.
 
-- As a user, I want to have the ability to edit the contacts  
+- As a user, I want to have the ability to edit the contacts
 
 - As a user, I want to create a calendar event
 
-- As a user, I want to delete a calendar Event 
+- As a user, I want to delete a calendar Event
 
 - As a user I want to edit a calendar event
 
-	- Calendar Events should have a name, a description, and volunteers. 
+  - Calendar Events should have a name, a description, and volunteers.
 
-- As a user, I should be able to see the list of categories of events/committees. 
+- As a user, I should be able to see the list of categories of events/committees.
 
-- As A user 
+- As A user
 
 - As a user, I want to be able to find the closest café close to any given location
 
 - As a user, I want to be able to find the highest-rated café within a certain distance from any given location
 
-- As a user, I must be able to send a mass email to a group. 
-
-  
+- As a user, I must be able to send a mass email to a group.
 
 ## Implementation
 
@@ -75,9 +64,9 @@ The Board maintains outreach through far 10+ groups and  and beyond 20+ email gr
 
 - Express
 
-- Terraform 
+- Terraform
 
-- AWS (Simple Email Service) 
+- AWS (Simple Email Service)
 
 ### Client libraries:
 
@@ -89,7 +78,7 @@ The Board maintains outreach through far 10+ groups and  and beyond 20+ email gr
 
 - SASS
 
-- Material UI or Shader CN 
+- Material UI or Shader CN
 
 - Server libraries:
 
@@ -101,10 +90,9 @@ The Board maintains outreach through far 10+ groups and  and beyond 20+ email gr
 
 - Passport.JS
 
-- AWS SDK 
-	- https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/ses-examples-sending-email.html
-	- https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/ses/src/libs/sesClient.js
-  
+- AWS SDK
+  - https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/ses-examples-sending-email.html
+  - https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/ses/src/libs/sesClient.js
 
 ### APIs
 
@@ -114,106 +102,115 @@ The Board maintains outreach through far 10+ groups and  and beyond 20+ email gr
 
 - Home page
 
-- Login Page 
+- Login Page
 
-- Log out Page 
+- Log out Page
 
 - List Events
 
-- Edit Events 
+- Edit Events
 
-- Delete Events 
+- Delete Events
 
 - List Committees
 
-- Delete Committees 
+- Delete Committees
 
-- Add Committees 
+- Add Committees
 
-- Create contact 
+- Create contact
 
-- Delete Contact 
+- Delete Contact
 
-- Edit Contact 
+- Edit Contact
 
-- Create email 
+- Create email
 
-- Send Email 
-
-  
+- Send Email
 
 ### Mockups
 
-  
-
 #### Home Page
 
-![](home.png)
-
-  
+![Home Page](image-1.png)
 
 #### Register Page
 
 ![](register.png)
 
-  
-
 #### Login Page
 
 ![](login.png)
 
-  
+#### Logout Page
 
-#### Enter Location Page
+![](logout.png)
 
-![](enter-location.png)
+#### List of Events
 
-  
+![](ListofEvents.png)
 
-#### View Cafés Page
+#### Edit Event
 
-![](view-cafes.png)
+![](EditEvent.png)
 
-  
+#### Delete Event
 
-#### View Café Page
+![](DeleteEvent.png)
 
-![](view-cafe.png)
+#### List Committees
 
-  
+![](ListCommittees.png)
 
-#### View Café Page (Rated state)
+#### Delete Committees
 
-![](view-cafe-rated.png)
+![](DeleteCommittees.png)
 
-  
-  
+#### Add Committees
 
-### DataFlow 
+![](AddCommittees.png)
 
-  
+#### Create Volunteer
+
+![](CreateVolunteer.png)
+
+#### Delete Volunteer
+
+![](DeleteVolunteer.png)
+
+#### Edit Volunteer
+
+![](EditVolunteer.png)
+
+#### Create Email
+
+![](createEmail.png)
+
+#### Send Email
+
+![](sendEmail.png)
+
+### DataFlow
 
 (![SQL Diagram ](image.png))
 
-  
-
 ### Endpoints
 
- **GET /Volunteer**
- Gets list of Volunteer: 
- Parameters:
+**GET /Volunteer**
+Gets list of Volunteer:
+Parameters:
 
 - volunteer_id - automatically generated ID that corresponds to a volunteer
 
 - Name
 
-- Phone number 
+- Phone number
 
 - Committee
 
-- Email 
+- Email
 
-- Event_help: list of event names, they have signed up for. 
+- Event_help: list of event names, they have signed up for.
 
 Response:
 
@@ -233,9 +230,9 @@ Response:
 
 "committees": ["Weeding", "Butterfly", "Winter Lights"]
 
-"event_help" :["halloween", "Music at the Gazebo", "Garden work day 6/6"], 
-}, 
-{....}, 
+"event_help" :["halloween", "Music at the Gazebo", "Garden work day 6/6"],
+},
+{....},
 
 ...
 
@@ -249,17 +246,17 @@ Response:
 
 Parameters:
 
-- volunteer_id - automatically generated ID that corresponds to a volunteer 
+- volunteer_id - automatically generated ID that corresponds to a volunteer
 
 - Name
 
-- Phone number 
+- Phone number
 
-- Committee 
+- Committee
 
-- Email 
+- Email
 
-- Event_help: list of event names, they have signed up for.  
+- Event_help: list of event names, they have signed up for.
 
 Response:
 
@@ -277,9 +274,9 @@ Response:
 
 "email": "email@email.com",
 
-"committees": ["Weeding", "Butterfly", "Winter Lights"], 
+"committees": ["Weeding", "Butterfly", "Winter Lights"],
 
-"event_help" :["halloween", "Music at the Gazebo", "Garden work day 6/6"], 
+"event_help" :["halloween", "Music at the Gazebo", "Garden work day 6/6"],
 
 }
 
@@ -291,20 +288,19 @@ Response:
 
 - Create a new volunteer/Contact
 
-Parameters: 
+Parameters:
 
-- Volunteer_id - automatically generated ID that corresponds to a volunteer 
+- Volunteer_id - automatically generated ID that corresponds to a volunteer
 
 - Name
 
-- Phone number 
+- Phone number
 
-- Committee 
+- Committee
 
-- Email 
+- Email
 
-- Event_help: list of event names, they have signed up for.  
-
+- Event_help: list of event names, they have signed up for.
 
 [
 
@@ -318,7 +314,7 @@ Parameters:
 
 "email": "volunteer@email.com",
 
-"committees": [ "Butterfly", "Winter Lights", "Lawn'], 
+"committees": [ "Butterfly", "Winter Lights", "Lawn'],
 
 "event_help" :["halloween", "Music at the Gazebo", "Garden work day 6/6"],
 }
@@ -329,18 +325,18 @@ Parameters:
 
 - Edit a new volunteer/Contact
 
-Parameters (just one field will need to be different): 
+Parameters (just one field will need to be different):
 
-- Volunteer_id - automatically generated ID that corresponds to a volunteer (unable to delete this field) 
+- Volunteer_id - automatically generated ID that corresponds to a volunteer (unable to delete this field)
 
-- Name 
+- Name
 
-- Phone number 
+- Phone number
 
-- Committee 
+- Committee
 
-- Email 
-- 
+- Email
+-
 
 [
 
@@ -363,42 +359,39 @@ Parameters (just one field will need to be different):
 
 - Deletes a Volunteer/Contact
 
-Parameters (just one field will need to be different): 
+Parameters (just one field will need to be different):
 
-- Volunteer_id - automatically generated ID that corresponds to a volunteer 
+- Volunteer_id - automatically generated ID that corresponds to a volunteer
 
-- Name 
+- Name
 
-- Phone number 
+- Phone number
 
-- Committee 
+- Committee
 
-- Email 
+- Email
 
 [
 
-204: content not found 
+204: content not found
 
 ]
 
-  
-
 **GET /Events/:id**
 
-- Get Total List of Calendar Events 
+- Get Total List of Calendar Events
 
 Parameters:
 
-- Event_id:  id tied to event 
+- Event_id: id tied to event
 
-- Event Name: Name of the event 
+- Event Name: Name of the event
 
-- Description: Event description or further details 
+- Description: Event description or further details
 
-- Committee - Committee or group of volunteers this can correspond to 
+- Committee - Committee or group of volunteers this can correspond to
 
-- Volunteers: List of volunteers, that have signed up for the event. 
-  
+- Volunteers: List of volunteers, that have signed up for the event.
 
 Response:
 
@@ -409,11 +402,11 @@ Response:
 
 "event_name": "Winter Wonderland",
 
-"date": "December 1 - January 14", 
+"date": "December 1 - January 14",
 
 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
 
-"committee": "Winter Wonderland", 
+"committee": "Winter Wonderland",
 
 "volunteers": [userid_1, userid2, .... ],
 
@@ -423,20 +416,19 @@ Response:
 
 **Post /Events**
 
-- Create new Calendar Event 
+- Create new Calendar Event
 
 Parameters:
 
-- Event_id:  id tied to event 
+- Event_id: id tied to event
 
-- Event Name: Name of the event 
+- Event Name: Name of the event
 
-- Description: Event description or further details 
+- Description: Event description or further details
 
-- Committee - Committee or group of volunteers this can correspond to 
+- Committee - Committee or group of volunteers this can correspond to
 
-- Volunteers: List of volunteers, that have signed up for the event. (optional) 
-  
+- Volunteers: List of volunteers, that have signed up for the event. (optional)
 
 Response:
 
@@ -448,17 +440,17 @@ Response:
 
 "event_name": "Winter Wonderland",
 
-"date": "December 1 - January 14", 
+"date": "December 1 - January 14",
 
 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
 
-"committee": "Winter Wonderland", 
+"committee": "Winter Wonderland",
 
 "volunteers": [userid_1, userid2, .... ],
 
-}, 
+},
 ....
-] 
+]
 ```
 
 **Patch /Events/:id**
@@ -467,18 +459,18 @@ Response:
 
 Parameters:
 
-- Event_id:  id tied to event
+- Event_id: id tied to event
 
-- Event Name: Name of the event 
+- Event Name: Name of the event
 
-- Description: Event description or further details 
+- Description: Event description or further details
 
-- Committee - Committee or group of volunteers this can correspond to 
+- Committee - Committee or group of volunteers this can correspond to
 
-- Volunteers: List of volunteers, that have signed up for the event. 
-  
+- Volunteers: List of volunteers, that have signed up for the event.
 
 Response:
+
 ```
 [
 {
@@ -487,53 +479,51 @@ Response:
 
 "event_name": "Winter Wonderland",
 
-"date": "December 1 - January 14", 
+"date": "December 1 - January 14",
 
 "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
 
 "volunteers": [userid_1, userid2, .... ],
 
-}, 
+},
 ....
-] 
+]
 
 ```
 
-  **Delete /Events/:id**
+**Delete /Events/:id**
 
-- Delete  Calendar Event 
+- Delete Calendar Event
 
 Parameters:
 
-- Event_id:  id tied to event 
+- Event_id: id tied to event
 
-- Event Name: Name of the event 
+- Event Name: Name of the event
 
-- Description: Event description or further details 
+- Description: Event description or further details
 
-- Committee - Committee or group of volunteers this can correspond to 
+- Committee - Committee or group of volunteers this can correspond to
 
-- Volunteers: List of volunteers, that have signed up for the event. (optional) 
-  
+- Volunteers: List of volunteers, that have signed up for the event. (optional)
 
 Response:
 
 ```
 [
-204: content not found 
-] 
+204: content not found
+]
 ```
 
+**Post /Users/Register**
 
- **Post /Users/Register**
 - Add a user account
 
 Parameters:
+
 - email: User's email
 
 - password: User's provided password
-
-  
 
 Response:
 
@@ -547,20 +537,15 @@ Response:
 
 ```
 
-  
-
 **POST /users/login**
-- Login a user
 
-  
+- Login a user
 
 Parameters:
 
 - email: User's email
 
 - password: User's provided password
-
-  
 
 Response:
 
@@ -575,11 +560,11 @@ Response:
 
 **GET /categories**
 
- Gets list of categories/Committees:
-  
- Parameters:
+Gets list of categories/Committees:
 
-- Category 
+Parameters:
+
+- Category
 
 Response:
 
@@ -588,24 +573,24 @@ Response:
 [
 
 "weeding",
-"butterfly garden", 
-"landscaping", 
-"Halloween", 
-"winter lights set up", 
-"Winter Lights management", 
-"july 4th", 
-"Marketing", 
-"Farmers Market", 
+"butterfly garden",
+"landscaping",
+"Halloween",
+"winter lights set up",
+"Winter Lights management",
+"july 4th",
+"Marketing",
+"Farmers Market",
 ]
 
 ```
 
 **Post /categories**
-Add new Category/Committee: 
-  
- Parameters:
+Add new Category/Committee:
 
-- Category 
+Parameters:
+
+- Category
 
 Response:
 
@@ -614,13 +599,13 @@ Response:
 [
 
 "weeding",
-"butterfly garden", 
-"landscaping", 
-"Halloween", 
-"winter lights set up", 
-"Winter Lights management", 
-"july 4th", 
-"Marketing", 
+"butterfly garden",
+"landscaping",
+"Halloween",
+"winter lights set up",
+"Winter Lights management",
+"july 4th",
+"Marketing",
 "Farmers Market",
 "NEW ITEM HERE"
 ]
@@ -628,11 +613,11 @@ Response:
 ```
 
 **Delete/categories/categoryItem**
-Delete a Category/Committee: 
-  
- Parameters:
+Delete a Category/Committee:
 
-- Category 
+Parameters:
+
+- Category
 
 IE: delete /categories/FarmersMarket
 
@@ -643,20 +628,20 @@ Response:
 [
 
 "weeding",
-"butterfly garden", 
-"landscaping", 
-"Halloween", 
-"winter lights set up", 
-"Winter Lights management", 
-"july 4th", 
-"Marketing", 
+"butterfly garden",
+"landscaping",
+"Halloween",
+"winter lights set up",
+"Winter Lights management",
+"july 4th",
+"Marketing",
 
 ]
 
 ```
 
-
 ### Auth
+
 - JWT auth
 
 - Before adding auth, all API requests will be using a fake user with id 1
@@ -667,97 +652,97 @@ Response:
 
 - Add states for logged in showing different UI in places listed in mockups
 
-  
-
 ## Roadmap
 
-***Create server***
+**_Create server_**
 
 - express project with routing, with placeholder 200 responses
 
-***Create client***
+**_Create client_**
 
 - react project with routes and boilerplate pages
 
-***Create migrations***
+**_Create migrations_**
 
-- 10 random events to be seeded into a DB 
+- 10 random events to be seeded into a DB
 
-- Create 5-10 random events/committees. to be seeded into a DB 
+- Create 5-10 random events/committees. to be seeded into a DB
 
-- Create 10 users, to be seeded into a DB 
+- Create 10 users, to be seeded into a DB
 
 - Create seeds with sample café data
 
 - Deploy client and server projects so all commits will be reflected in production
 
-***Features concerning Volunteers***   
+**_Features concerning Volunteers_**
+
 - List All volunteers on a specific page
 
-- Edit volunteers on a specific page (includes delete icon/option) 
+- Edit volunteers on a specific page (includes delete icon/option)
 
 - Delete a volunteer confirmation/modal
 
-- Add a new volunteer 
+- Add a new volunteer
 
-- Ability to assign events to a volunteer 
+- Ability to assign events to a volunteer
 
-	***Endpoints Involved***
+  **_Endpoints Involved_**
 
-- GET /volunteers endpoint - List all volunteers 
+- GET /volunteers endpoint - List all volunteers
 - Post/Events Endpoint - Create a new volunteer
-- Patch/Events Endpoint - Edit or update a volunteer 
-- Delete/Events Endpoint - Delete a volunteer 
-- 
-***Event Features***   
+- Patch/Events Endpoint - Edit or update a volunteer
+- Delete/Events Endpoint - Delete a volunteer
+- **_Event Features_**
 - List Events on a specific page
 
-- Edit an event page 
+- Edit an event page
 
-- Delete an Event confirmation 
+- Delete an Event confirmation
 
-- Add a new Event 
+- Add a new Event
 
-- Add a category(ies)/committee(s) to an event 
+- Add a category(ies)/committee(s) to an event
 
-- Add A volunteer(s) to an event 
+- Add A volunteer(s) to an event
 
-	***Endpoints Involved***
+  **_Endpoints Involved_**
 
-- GET /events endpoint - List all Events 
-- Post/Events Endpoint - Create a new event 
-- Patch/Events Endpoint - Edit or update an event 
-- Delete/Events Endpoint - Delete an event 
+- GET /events endpoint - List all Events
+- Post/Events Endpoint - Create a new event
+- Patch/Events Endpoint - Edit or update an event
+- Delete/Events Endpoint - Delete an event
 
-  
+**_Feature: Users_**
 
-***Feature: Users***
 - Create a User
-- User Login Page 
-- Create a new User Page 
+- User Login Page
+- Create a new User Page
 - Login as a User
 
-  	***Endpoints Involved***
-- Post /Users/Register - add a user 
+      ***Endpoints Involved***
+
+- Post /Users/Register - add a user
 - POST /users/login
 
-***Feature: Category***
-- Add a new category 
+**_Feature: Category_**
+
+- Add a new category
 - Delete a category
 
-  	***Endpoints Involved***
-- Post /categories 
-- Delete/categories/categoryItem 
+      ***Endpoints Involved***
+
+- Post /categories
+- Delete/categories/categoryItem
 
 **Feature: Home page**
-- shows the upcoming event on the calendar 
+
+- shows the upcoming event on the calendar
 
 - Feature: Create account
 
 - Implement register page + form
 
 - Create POST /users/register endpoint
-  
 
 **Feature: Implement JWT tokens**
 
@@ -765,14 +750,8 @@ Response:
 
 - Client: Store JWT in local storage, include JWT on axios calls
 
-  
-
 - Bug fixes
-
-  
 - DEMO DAY
-
-  
 
 ## Nice-to-haves
 
@@ -781,19 +760,19 @@ Response:
 - Draft Emails
 
 - AWS SES has an email limit of 200 emails per day, with only 50 emails sent at a time
-	- Understand how to loop through a email list greater than 50 people, and send emails in batches 
-	- There also may be better options out there. 
+
+  - Understand how to loop through a email list greater than 50 people, and send emails in batches
+  - There also may be better options out there.
 
 - Implement AWS SMS to send out text reminders
 
-- Draft Text message 
+- Draft Text message
 
-- If working on an email, and you navigate to another page, Can you save the email text to session/Local storage for the page to remember 
+- If working on an email, and you navigate to another page, Can you save the email text to session/Local storage for the page to remember
 
 - Forgot password functionality
 
-- Volunteer (customer facing view over administrative view)  interface - 
-	- See what events are available
-	- See what events can be signed up for 
-	- remove themself from Events from events 
-
+- Volunteer (customer facing view over administrative view) interface -
+  - See what events are available
+  - See what events can be signed up for
+  - remove themself from Events from events

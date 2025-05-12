@@ -1,0 +1,21 @@
+{
+  "name": "capstone_manuel_torres",
+  "version": "1.0.0",
+  "description": "BrainStation_SE Capstone Project | Rooted Reach - Volunteer management platform inspired to solve problems a local non-profit faces",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run dev --prefix backend\"",
+    "install-all": "npm install && npm install --prefix frontend && npm install --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manny-torres-02/Capstone_Manuel_Torres.git"
+  },
+  "author": "Manny",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manny-torres-02/Capstone_Manuel_Torres/issues"
+  },
+  "homepage": "https://github.com/manny-torres-02/Capstone_Manuel_Torres#readme"
+}

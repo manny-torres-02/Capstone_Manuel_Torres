@@ -6,23 +6,105 @@ RootedReach
 
 RootedReach is a volunteer management dashboard. This will help to keep track of volunteers, and keep everyone updated of who is working on what, where and when.
 
-### Problem
-
-Community organizations have a mission to serve the community and to offer a lifeline or means of communication between the district and the city. These neighborhood organizations in Milwaukee have a direct means of communication with the local alderman, and act as a medium to show the problems of the district to local government. What these organizations often lack is a clear calendar of events, managing volunteers in a quick and effective manner, and consistent ability to perform outreach with the community.
+Community organizations have a mission to serve the community and to offer a lifeline or means of communication between the district and the city. These neighborhood organizations in Milwaukee have a direct means of communication with the local alderman, and act as a medium to show the problems of the district to local government. What these organizations often lack is a clear calendar of events, an ability to manage volunteers in a quick and effective manner, and consistent ability to perform outreach with the community.
 
 The Board maintains outreach through far 10+ groups and and beyond 20+ email groups that makes it very difficult to make contact with the right group. This can be a bit of a confusing task to remember which group is the most updated for the current purpose. On top of this managing a rotating list of volunteers that want to help out on very specific events can be very convoluted.
+
+- [Project Title](#project-title)
+  - [Overview](#overview)
+- [Priority of implementation](#priority-of-implementation)
+  - [User Profile](#user-profile)
+    - [Things that users should be able to do](#things-that-users-should-be-able-to-do)
+  - [Features](#features)
+  - [Implementation](#implementation)
+    - [Tech Stack](#tech-stack)
+    - [Client libraries:](#client-libraries)
+    - [APIs](#apis)
+    - [Sitemap](#sitemap)
+    - [Mockups](#mockups)
+      - [Home Page](#home-page)
+      - [Register Page](#register-page)
+      - [Login Page](#login-page)
+      - [Logout Page](#logout-page)
+      - [List of Events](#list-of-events)
+      - [Edit Event](#edit-event)
+      - [Delete Event](#delete-event)
+      - [List Committees](#list-committees)
+      - [Delete Committees](#delete-committees)
+      - [Add Committees](#add-committees)
+      - [Create Volunteer](#create-volunteer)
+      - [Delete Volunteer](#delete-volunteer)
+      - [Edit Volunteer](#edit-volunteer)
+      - [Create Email](#create-email)
+      - [Send Email](#send-email)
+    - [DataFlow](#dataflow)
+    - [Endpoints](#endpoints)
+    - [Auth](#auth)
+  - [Roadmap](#roadmap)
+  - [Nice-to-haves](#nice-to-haves)
+
+# Priority of implementation
+
+1. Minimum required items
+
+- Create BackEnd and routes
+  - Test routes in postman
+- Create Seed DBS
+  - Categories
+  - Events
+  - Contacts
+- Pages to create
+
+  - Home page
+  - List Events
+  - Edit Events
+  - Delete Events
+  - List Committees
+
+  - Delete Committees
+
+  - Add Committees
+
+  - Create contact
+
+  - Delete Contact
+
+  - Edit Contact
+
+  - Create email
+
+  - Send Email
+
+- AWS SES
+  - Terraform
+
+2. Authorization and login
+
+- Login Page
+
+- Log out Page
+
+- Passport.jsx
 
 ### User Profile
 
 - Board Member
 
-- Create contact lists
+#### Things that users should be able to do
+
+- create contact lists
+
+- Add contacts
+
+- Edit Contacts
+
+- Delete contacts
 
 - Manage assigning volunteers to specific events
 
 - Manage an updateable calendar
 
-- Manage outreach towards specified groups
+- Manage outreach using email towards specified groups
 
 ### Features
 
@@ -44,12 +126,6 @@ The Board maintains outreach through far 10+ groups and and beyond 20+ email gro
 
 - As a user, I should be able to see the list of categories of events/committees.
 
-- As A user
-
-- As a user, I want to be able to find the closest café close to any given location
-
-- As a user, I want to be able to find the highest-rated café within a certain distance from any given location
-
 - As a user, I must be able to send a mass email to a group.
 
 ## Implementation
@@ -68,6 +144,10 @@ The Board maintains outreach through far 10+ groups and and beyond 20+ email gro
 
 - AWS (Simple Email Service)
 
+- Sass
+
+- ShadCN for the UI components
+
 ### Client libraries:
 
 - react
@@ -79,20 +159,6 @@ The Board maintains outreach through far 10+ groups and and beyond 20+ email gro
 - SASS
 
 - Material UI or Shader CN
-
-- Server libraries:
-
-- knex
-
-- express
-
-- bcrypt for password hashing
-
-- Passport.JS
-
-- AWS SDK
-  - https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/ses-examples-sending-email.html
-  - https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/ses/src/libs/sesClient.js
 
 ### APIs
 

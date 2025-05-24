@@ -70,7 +70,7 @@ async function handleAssignments(
   }
 }
 
-//Path to get the volunteers
+//Path to get/read the volunteer tables
 router.get("/", async (_req, res) => {
   try {
     //select the volunteer table
@@ -213,7 +213,7 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error: "internal server Error" });
   }
 });
-
+//update the volunteer
 router.patch("/:volunteerId", async (req, res) => {
   const { volunteerId } = req.params;
   const { name, phoneNumber, email, categoryIds, eventIds } = req.body;

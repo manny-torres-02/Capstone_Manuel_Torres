@@ -2,6 +2,11 @@
 
 This is the backend server for the project, built with Node.js and Express. It handles API requests, business logic, and future database interactions.
 
+## Routes
+- Volunteer tables
+  - read the volunteer table, pulled in the associated categories and events 
+  - Post new Volunteeer to the volunteer table 
+
 ## How to Use
 
 1. Navigate to the backend folder:
@@ -115,3 +120,8 @@ FROM volunteers v
 JOIN volunteer_events ve ON v.id = ve.volunteer_id
 JOIN events e ON ve.event_id = e.id;
 ```
+
+kill node instances - if the local host/server is not being updated, then run this and rerun npm run dev 
+killall node
+
+

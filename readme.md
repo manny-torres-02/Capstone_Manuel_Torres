@@ -262,7 +262,7 @@ The Board maintains outreach through far 10+ groups and and beyond 20+ email gro
 
 ### Endpoints
 
-**GET /Volunteer**
+**GET /Volunteer** (done)
 Gets list of Volunteer:
 Parameters:
 
@@ -306,7 +306,7 @@ Response:
 
 ```
 
-**GET /Volunteers/:id**
+**GET /Volunteers/:id** (done)
 
 - Get user
 
@@ -350,7 +350,7 @@ Response:
 
 ```
 
-**Post /Volunteers/:id**
+**Post /Volunteers/:id** (done)
 
 - Create a new volunteer/Contact
 
@@ -387,7 +387,7 @@ Parameters:
 
 ]
 
-**Patch /Volunteers/:id**
+**Patch /Volunteers/:id** (done)
 
 - Edit a new volunteer/Contact
 
@@ -421,8 +421,8 @@ Parameters (just one field will need to be different):
 
 ]
 
-**Delete /Volunteers/:id**
-
+**Delete /Volunteers/:id** (done)
+ 
 - Deletes a Volunteer/Contact
 
 Parameters (just one field will need to be different):

@@ -1,5 +1,4 @@
 export async function up(knex) {
-  // 1. Create core tables (if they don't exist)
   await safeCreateTable(knex, "categories", (table) => {
     table.increments("id").primary();
     table.string("name").notNullable().unique();

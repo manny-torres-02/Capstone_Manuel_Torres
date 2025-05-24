@@ -12,6 +12,8 @@ This is the backend server for the project, built with Node.js and Express. It h
 - [x] Post new Volunteeer to the volunteer table, add that volunteer automatically to the associated Categories and evetns joint tables
 - [x] delete a volunteer and its association to other tables.
 
+####
+
 ## How to Use
 
 1. Navigate to the backend folder:

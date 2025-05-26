@@ -1,3 +1,4 @@
 Env Variables 
-
+.env
+node_modules
 .gitignore

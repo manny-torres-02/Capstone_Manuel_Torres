@@ -246,25 +246,23 @@ router.patch("/:eventId", async (req, res) => {
       await trx.rollback();
       return res.status(404).json({ error: `Event ${eventId} not found` });
     }
-    //placeholder for updates
-    const updates = {};
+    // Construct updates object using object spread syntax
+    const updates = {
+      ...(name !== undefined && { name }),
+      ...(date !== undefined && /^\d{4}-\d{2}-\d{2}$/.test(date) && { date }),
+      ...(end_date !== undefined && { end_date }),
+      ...(description !== undefined && { description }),
+      ...(image_url !== undefined && { image_url }),
+      ...(volunteers_needed !== undefined && { volunteers_needed }),
+    };
 
-    //TODO: Is there a better way to do this?
-    if (name !== undefined) updates.name = name;
-    if (date !== undefined) {
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-        await trx.rollback();
-        return res
-          .status(400)
-          .json({ message: "Invalid date format. Use YYYY-MM-DD" });
-      }
-      updates.date = date;
+    // Validate date format if provided
+    if (date !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      await trx.rollback();
+      return res
+        .status(400)
+        .json({ message: "Invalid date format. Use YYYY-MM-DD" });
     }
-    if (end_date !== undefined) updates.end_date = end_date;
-    if (description !== undefined) updates.description = description;
-    if (image_url !== undefined) updates.image_url = image_url;
-    if (volunteers_needed !== undefined)
-      updates.volunteers_needed = volunteers_needed;
 
     //Apply updates where needed..
     if (Object.keys(updates).length > 0) {

@@ -2,7 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import volunteers from "./routes/volunteers.js";
+import events from "./routes/events.js";
 import db from "./knexconfig.js"; //TODO: Remove if unneeded.
+import categories from "./routes/categories.js";
 
 dotenv.config();
 
@@ -34,6 +36,9 @@ app.get("/", (req, res) => {
 
 app.use("/volunteers", volunteers);
 
+app.use("/events", events);
+
+app.use("/categories", categories);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

@@ -4,8 +4,8 @@ const knex = initKnex(configuration);
 import express from "express";
 const router = express.Router();
 
-// TODO: When you delete a volunteer, you need to delete the associated entry in the categories, and the
-//TODO: when you edit a volunteer you need to make sure you can run the edit to the junction table...
+// TODO: When you delete a volunteer, you need to delete the associated entry in the categories, and the (Done)
+//TODO: when you edit a volunteer you need to make sure you can run the edit to the junction table... (done)
 //TODO: Research on when you delete volunteer, for example, volunteer 9, then add a new volunteeer, why isnt the new volunteer coming up with the id: 9
 //TODO:Should I Add indexes into the junction tables?
 //index(["volunteer_id", "category_id"], "vol_cat_idx");
@@ -204,7 +204,7 @@ router.delete("/:id", async (req, res) => {
 
     const deleteVolunteer = await knex("volunteers").where({ id }).del(); //del returns # of deleted rows, technically truthy, but not a boolean.
     if (deleteVolunteer > 0) {
-      res.sendStatus(204); //no response. TODO: Should I return a message
+      res.sendStatus(204); 
     } else {
       res.status(404).send(`The volunteer ${id} is not found.`);
     }

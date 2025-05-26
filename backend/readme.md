@@ -12,7 +12,14 @@ This is the backend server for the project, built with Node.js and Express. It h
 - [x] Post new Volunteeer to the volunteer table, add that volunteer automatically to the associated Categories and evetns joint tables
 - [x] delete a volunteer and its association to other tables.
 
-####
+#### Events Tables 
+- [x] read all events 
+- [x] read a single event 
+- [x] pull in the associated categories and volunteers for reading the tables
+- [x] create new event, and add to joint tables 
+- [x] delete an event and the joint table entries
+- [x] Edit existine event with possibility to edit associated joint table entries 
+
 
 ## How to Use
 

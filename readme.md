@@ -443,7 +443,7 @@ Parameters (just one field will need to be different):
 
 ]
 
-**GET /Events/:id**
+**GET /Events/:id** (Done)
 
 - Get Total List of Calendar Events
 
@@ -480,7 +480,7 @@ Response:
 
 ```
 
-**Post /Events**
+**Post /Events** (Done)
 
 - Create new Calendar Event
 
@@ -519,7 +519,7 @@ Response:
 ]
 ```
 
-**Patch /Events/:id**
+**Patch /Events/:id** (Done)
 
 - update an event
 
@@ -557,7 +557,7 @@ Response:
 
 ```
 
-**Delete /Events/:id**
+**Delete /Events/:id** (Done)
 
 - Delete Calendar Event
 
@@ -581,7 +581,7 @@ Response:
 ]
 ```
 
-**Post /Users/Register**
+**Post /Users/Register** TODO: Tier 3
 
 - Add a user account
 
@@ -603,7 +603,7 @@ Response:
 
 ```
 
-**POST /users/login**
+**POST /users/login** TODO: Tier 3
 
 - Login a user
 

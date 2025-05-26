@@ -43,7 +43,7 @@ router.get("/", async (req, res) => {
     res.json(eventDetails);
   } catch (err) {
     console.log(err);
-    res.status(400).send(`Error retrieving Users: ${err}`);
+    res.status(400).send(`Error retrieving Events: ${err}`);
   }
 });
 

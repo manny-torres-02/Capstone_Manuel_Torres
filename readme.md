@@ -13,9 +13,9 @@ The Board maintains outreach through far 10+ groups and and beyond 20+ email gro
 - [Project Title](#project-title)
   - [Overview](#overview)
 - [Priority of implementation](#priority-of-implementation)
-  - [User Profile](#user-profile)
-    - [Things that users should be able to do](#things-that-users-should-be-able-to-do)
-  - [Features](#features)
+    - [User Profile](#user-profile)
+      - [Things that users should be able to do](#things-that-users-should-be-able-to-do)
+    - [Features](#features)
   - [Implementation](#implementation)
     - [Tech Stack](#tech-stack)
     - [Client libraries:](#client-libraries)
@@ -262,7 +262,7 @@ The Board maintains outreach through far 10+ groups and and beyond 20+ email gro
 
 ### Endpoints
 
-**GET /Volunteer**
+**GET /Volunteer** (done)
 Gets list of Volunteer:
 Parameters:
 
@@ -306,7 +306,7 @@ Response:
 
 ```
 
-**GET /Volunteers/:id**
+**GET /Volunteers/:id** (done)
 
 - Get user
 
@@ -350,7 +350,7 @@ Response:
 
 ```
 
-**Post /Volunteers/:id**
+**Post /Volunteers/:id** (done)
 
 - Create a new volunteer/Contact
 
@@ -387,7 +387,7 @@ Parameters:
 
 ]
 
-**Patch /Volunteers/:id**
+**Patch /Volunteers/:id** (done)
 
 - Edit a new volunteer/Contact
 
@@ -421,8 +421,8 @@ Parameters (just one field will need to be different):
 
 ]
 
-**Delete /Volunteers/:id**
-
+**Delete /Volunteers/:id** (done)
+ 
 - Deletes a Volunteer/Contact
 
 Parameters (just one field will need to be different):
@@ -443,7 +443,7 @@ Parameters (just one field will need to be different):
 
 ]
 
-**GET /Events/:id**
+**GET /Events/:id** (Done)
 
 - Get Total List of Calendar Events
 
@@ -480,7 +480,7 @@ Response:
 
 ```
 
-**Post /Events**
+**Post /Events** (Done)
 
 - Create new Calendar Event
 
@@ -519,7 +519,7 @@ Response:
 ]
 ```
 
-**Patch /Events/:id**
+**Patch /Events/:id** (Done)
 
 - update an event
 
@@ -557,7 +557,7 @@ Response:
 
 ```
 
-**Delete /Events/:id**
+**Delete /Events/:id** (Done)
 
 - Delete Calendar Event
 
@@ -581,7 +581,7 @@ Response:
 ]
 ```
 
-**Post /Users/Register**
+**Post /Users/Register** TODO: Tier 3
 
 - Add a user account
 
@@ -603,7 +603,7 @@ Response:
 
 ```
 
-**POST /users/login**
+**POST /users/login** TODO: Tier 3
 
 - Login a user
 

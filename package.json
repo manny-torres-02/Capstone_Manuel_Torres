@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/manny-torres-02/Capstone_Manuel_Torres/issues"
   },
-  "homepage": "https://github.com/manny-torres-02/Capstone_Manuel_Torres#readme"
+  "homepage": "https://github.com/manny-torres-02/Capstone_Manuel_Torres#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }

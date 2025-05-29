@@ -2,53 +2,62 @@
 
 // Colors
 $colors: (
-  'background': oklch(0.8798 0.0534 91.7893),
-  'foreground': oklch(0.4265 0.031 59.2153),
-  'card': oklch(0.8937 0.0395 87.5676),
-  'card-foreground': oklch(0.4265 0.031 59.2153),
-  'popover': oklch(0.9378 0.0331 89.8515),
-  'popover-foreground': oklch(0.4265 0.031 59.2153),
-  'primary': oklch(0.6657 0.105 118.9078),
-  'primary-foreground': oklch(0.9882 0.0069 88.6415),
-  'secondary': oklch(0.8532 0.0631 91.1493),
-  'secondary-foreground': oklch(0.4265 0.031 59.2153),
-  'muted': oklch(0.8532 0.0631 91.1493),
-  'muted-foreground': oklch(0.5761 0.0259 60.9323),
-  'accent': oklch(0.8361 0.0713 90.3269),
-  'accent-foreground': oklch(0.4265 0.031 59.2153),
-  'destructive': oklch(0.7136 0.0981 29.9827),
-  'destructive-foreground': oklch(0.979 0.0082 91.4818),
-  'border': oklch(0.6918 0.044 59.8448),
-  'input': oklch(0.8361 0.0713 90.3269),
-  'ring': oklch(0.735 0.0564 130.8494)
+  "background": #e4d7b0,
+  "foreground": #5c4b3e,
+  "card": #e7dbbf,
+  "card-foreground": #5c4b3e,
+  "popover": #f3ead2,
+  "popover-foreground": #5c4b3e,
+  "primary": #8d9d4f,
+  "primary-foreground": #fdfbf6,
+  "secondary": #decea0,
+  "secondary-foreground": #5c4b3e,
+  "muted": #decea0,
+  "muted-foreground": #85766a,
+  "accent": #dbc894,
+  "accent-foreground": #5c4b3e,
+  "destructive": #d98b7e,
+  "destructive-foreground": #faf8f2,
+  "border": #b19681,
+  "input": #dbc894,
+  "ring": #9db18c,
 );
 
 // Chart colors
 $chart-colors: (
-  'chart-1': oklch(0.735 0.0564 130.8494),
-  'chart-2': oklch(0.6762 0.0567 132.4479),
-  'chart-3': oklch(0.8185 0.0332 136.6539),
-  'chart-4': oklch(0.5929 0.0464 137.6224),
-  'chart-5': oklch(0.5183 0.039 137.1892)
+  "chart-1": #9db18c,
+  "chart-2": #8a9f7b,
+  "chart-3": #bac9b4,
+  "chart-4": #71856a,
+  "chart-5": #5e6e58,
 );
 
 // Sidebar colors
 $sidebar-colors: (
-  'sidebar': oklch(0.8631 0.0645 90.5161),
-  'sidebar-foreground': oklch(0.4265 0.031 59.2153),
-  'sidebar-primary': oklch(0.735 0.0564 130.8494),
-  'sidebar-primary-foreground': oklch(0.9882 0.0069 88.6415),
-  'sidebar-accent': oklch(0.9225 0.0169 88.0027),
-  'sidebar-accent-foreground': oklch(0.4265 0.031 59.2153),
-  'sidebar-border': oklch(0.9073 0.017 88.0044),
-  'sidebar-ring': oklch(0.735 0.0564 130.8494)
+  "sidebar": #e2d1a2,
+  "sidebar-foreground": #5c4b3e,
+  "sidebar-primary": #9db18c,
+  "sidebar-primary-foreground": #fdfbf6,
+  "sidebar-accent": #eae5d9,
+  "sidebar-accent-foreground": #5c4b3e,
+  "sidebar-border": #e5e0d4,
+  "sidebar-ring": #9db18c,
 );
 
 // Typography
 $fonts: (
-  'sans': (Merriweather, serif),
-  'serif': ('Source Serif 4', serif),
-  'mono': ('JetBrains Mono', monospace)
+  "sans": (
+    Merriweather,
+    serif,
+  ),
+  "serif": (
+    "Source Serif 4",
+    serif,
+  ),
+  "mono": (
+    "JetBrains Mono",
+    monospace,
+  ),
 );
 
 // Spacing and sizing
@@ -66,32 +75,47 @@ $shadow-offset-y: 3px;
 
 // Shadow presets
 $shadows: (
-  '2xs': 3px 3px 2px 0px hsl(88 22% 35% / 0.07),
-  'xs': 3px 3px 2px 0px hsl(88 22% 35% / 0.07),
-  'sm': (3px 3px 2px 0px hsl(88 22% 35% / 0.15), 3px 1px 2px -1px hsl(88 22% 35% / 0.15)),
-  'DEFAULT': (3px 3px 2px 0px hsl(88 22% 35% / 0.15), 3px 1px 2px -1px hsl(88 22% 35% / 0.15)),
-  'md': (3px 3px 2px 0px hsl(88 22% 35% / 0.15), 3px 2px 4px -1px hsl(88 22% 35% / 0.15)),
-  'lg': (3px 3px 2px 0px hsl(88 22% 35% / 0.15), 3px 4px 6px -1px hsl(88 22% 35% / 0.15)),
-  'xl': (3px 3px 2px 0px hsl(88 22% 35% / 0.15), 3px 8px 10px -1px hsl(88 22% 35% / 0.15)),
-  '2xl': 3px 3px 2px 0px hsl(88 22% 35% / 0.38)
+  "2xs": 3px 3px 2px 0px hsl(88 22% 35% / 0.07),
+  "xs": 3px 3px 2px 0px hsl(88 22% 35% / 0.07),
+  "sm": (
+    3px 3px 2px 0px hsl(88 22% 35% / 0.15),
+    3px 1px 2px -1px hsl(88 22% 35% / 0.15),
+  ),
+  "DEFAULT": (
+    3px 3px 2px 0px hsl(88 22% 35% / 0.15),
+    3px 1px 2px -1px hsl(88 22% 35% / 0.15),
+  ),
+  "md": (
+    3px 3px 2px 0px hsl(88 22% 35% / 0.15),
+    3px 2px 4px -1px hsl(88 22% 35% / 0.15),
+  ),
+  "lg": (
+    3px 3px 2px 0px hsl(88 22% 35% / 0.15),
+    3px 4px 6px -1px hsl(88 22% 35% / 0.15),
+  ),
+  "xl": (
+    3px 3px 2px 0px hsl(88 22% 35% / 0.15),
+    3px 8px 10px -1px hsl(88 22% 35% / 0.15),
+  ),
+  "2xl": 3px 3px 2px 0px hsl(88 22% 35% / 0.38),
 );
 
 // Tracking (letter-spacing) variants
 $tracking: (
-  'normal': $letter-spacing,
-  'tighter': calc(#{$letter-spacing} - 0.05em),
-  'tight': calc(#{$letter-spacing} - 0.025em),
-  'wide': calc(#{$letter-spacing} + 0.025em),
-  'wider': calc(#{$letter-spacing} + 0.05em),
-  'widest': calc(#{$letter-spacing} + 0.1em)
+  "normal": $letter-spacing,
+  "tighter": calc(#{$letter-spacing} - 0.05em),
+  "tight": calc(#{$letter-spacing} - 0.025em),
+  "wide": calc(#{$letter-spacing} + 0.025em),
+  "wider": calc(#{$letter-spacing} + 0.05em),
+  "widest": calc(#{$letter-spacing} + 0.1em),
 );
 
 // Radius variants
 $radius-variants: (
-  'sm': calc(#{$radius} - 4px),
-  'md': calc(#{$radius} - 2px),
-  'lg': $radius,
-  'xl': calc(#{$radius} + 4px)
+  "sm": calc(#{$radius} - 4px),
+  "md": calc(#{$radius} - 2px),
+  "lg": $radius,
+  "xl": calc(#{$radius} + 4px),
 );
 
 // Function to get color
@@ -110,7 +134,7 @@ $radius-variants: (
 }
 
 // Function to get shadow
-@function shadow($key: 'DEFAULT') {
+@function shadow($key: "DEFAULT") {
   @return map-get($shadows, $key);
 }
 
@@ -120,11 +144,11 @@ $radius-variants: (
 }
 
 // Function to get tracking
-@function tracking($key: 'normal') {
+@function tracking($key: "normal") {
   @return map-get($tracking, $key);
 }
 
 // Function to get radius
-@function radius($key: 'lg') {
+@function radius($key: "lg") {
   @return map-get($radius-variants, $key);
 }

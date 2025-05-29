@@ -1,0 +1,8 @@
+@use "../../styles/partials/variables" as *;
+
+.navigation {
+  &__button {
+    color: color("foreground");
+    background-color: color("background");
+  }
+}

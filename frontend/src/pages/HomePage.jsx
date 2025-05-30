@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Navigation from "../components/Nav/Navigation";
+import DataTable from "../components/Table/Table";
 
 const HomePage = () => {
+  const apiURL = import.meta.env.VITE_APP_API_URL || "http://localhost:8080/";
+  const [volunteerData, setVolunteerData] = useState([]);
+
+  const readvolunteerData = async () => {
+    try {
+      let url = `${apiURL}/volunteers`;
+      console.log("url=:", url);
+      const volunteerList = await axios.get(url);
+      setVolunteerData(volunteerList.data);
+    } catch (error) {
+      console.error("Error fetching volunteer data:", error);
+    }
+  };
+  useEffect(() => {
+    readvolunteerData();
+  }, []);
+
+  console.log("volunteer Data:", volunteerData);
   return (
     <div>
-      <h1>text</h1>{" "}
+      <DataTable
+        data={volunteerData}
+        title="Volunteers"
+        // searchable={true}  shadcn fxn
+        // sortable={true}shadcn fxn
+        // pagination={true}shadcn fxn
+      />
     </div>
   );
 };

@@ -15,6 +15,8 @@ const port = process.env.PORT || 8080;
 // const express = require("express");
 const app = express();
 
+const { CORS_ORIGIN } = process.env;
+
 const logRequest = (req, res, next) => {
   console.log(`Request: ${req.method} for ${req.path}`);
   next();
@@ -24,11 +26,12 @@ const logRequest = (req, res, next) => {
 // app.use('/static', express.static('public'))
 // dotenv.config();
 
+app.use(cors({ origin: CORS_ORIGIN }));
+console.log("CORS_ORIGIN:", process.env.CORS_ORIGIN);
+
 app.use(express.json());
 
 app.use(logRequest);
-
-app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("TEST FROM UPDATED test");

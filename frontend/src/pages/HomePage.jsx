@@ -7,6 +7,13 @@ const HomePage = () => {
   const apiURL = import.meta.env.VITE_APP_API_URL || "http://localhost:8080/";
   const [volunteerData, setVolunteerData] = useState([]);
 
+  const volunteerColumns = [
+    { key: "id", label: "ID", className: "w-[100px]" },
+    { key: "name", label: "Name" },
+    { key: "email", label: "Email" },
+    { key: "phoneNumber", label: "Phone", cellClassName: "text-right" },
+  ];
+
   const readvolunteerData = async () => {
     try {
       let url = `${apiURL}/volunteers`;
@@ -27,6 +34,7 @@ const HomePage = () => {
       <DataTable
         data={volunteerData}
         title="Volunteers"
+        columns={volunteerColumns}
         // searchable={true}  shadcn fxn
         // sortable={true}shadcn fxn
         // pagination={true}shadcn fxn

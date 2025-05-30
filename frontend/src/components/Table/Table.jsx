@@ -11,47 +11,78 @@ import {
 } from "@/components/ui/table";
 import "./Table.scss";
 
-const DataTable = ({ data, title }) => {
-  // try
+const DataTable = ({ data, title, columns }) => {
   return (
     <>
-      <h1> {title} </h1>
+      <h1>{title}</h1>
 
-      <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader className="dataTable__header-row">
-          <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data && data.length > 0 ? (
-            data.map((volunteer, index) => (
-              <TableRow key={volunteer.id || index}>
-                <TableCell className="font-medium">{volunteer.id}</TableCell>
-                <TableCell>{volunteer.name}</TableCell>
-                <TableCell>{volunteer.email}</TableCell>
-                <TableCell className="text-right">{volunteer.phone}</TableCell>
-              </TableRow>
-            ))
-          ) : (
+      {/* Desktop Table */}
+      <div className="hidden md:block">
+        <Table>
+          <TableCaption>A list of {title.toLowerCase()}</TableCaption>
+          <TableHeader className="dataTable__header-row">
             <TableRow>
-              <TableCell colSpan={4} className="text-center">
-                No volunteers found
-              </TableCell>
+              {columns.map((column) => (
+                <TableHead key={column.key} className={column.className || ""}>
+                  {column.label}
+                </TableHead>
+              ))}
             </TableRow>
-          )}
-          <TableRow>
-            <TableCell className="font-medium">INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className="text-right">$250.00</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {data && data.length > 0 ? (
+              data.map((item, index) => (
+                <TableRow key={item.id || index}>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.key}
+                      className={column.cellClassName || ""}
+                    >
+                      {column.render ? column.render(item) : item[column.key]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="text-center">
+                  No {title.toLowerCase()} found
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Mobile Card Layout */}
+      <div className="md:hidden space-y-4">
+        {data && data.length > 0 ? (
+          data.map((item, index) => (
+            <div
+              key={item.id || index}
+              className="bg-card border rounded-lg p-4 shadow-sm"
+            >
+              {columns.map((column) => (
+                <div
+                  key={column.key}
+                  className="flex justify-between py-2 border-b border-border last:border-b-0"
+                >
+                  <span className="font-medium text-muted-foreground">
+                    {column.label}:
+                  </span>
+                  <span className="text-right">
+                    {column.render ? column.render(item) : item[column.key]}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-8 text-muted-foreground">
+            No {title.toLowerCase()} found
+          </div>
+        )}
+      </div>
     </>
   );
 };

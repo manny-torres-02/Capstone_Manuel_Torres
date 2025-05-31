@@ -1,10 +1,14 @@
 import * as React from "react";
 import "./CreateVolunteerPage.scss";
+import VolunteerForm from "../../components/VolunteerForm/VolunteerForm";
 
 const CreateVolunteerPage = () => {
-  <>
-    <h1>CreateVolunteer PAGE</h1>
-  </>;
+  return (
+    <>
+      <h1>CreateVolunteer PAGE</h1>
+      <VolunteerForm />
+    </>
+  );
 };
 
 export default CreateVolunteerPage;

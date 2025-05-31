@@ -69,10 +69,10 @@ const Navigation = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  to="/Email"
+                  to="/createVolunteer"
                   className="px-4 py-2 text-foreground hover:text-primary"
                 >
-                  Email
+                  Create Volunteer
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navigation from "../components/Nav/Navigation";
 import DataTable from "../components/Table/Table";
-import { Edit, Trash2 } from "lucide-react"; // Add this import
+import { Edit, Trash2 } from "lucide-react";
+import { Button, buttonVariants } from "../components/ui/button";
 
 const HomePage = () => {
   const apiURL = import.meta.env.VITE_APP_API_URL || "http://localhost:8080/";
@@ -63,6 +64,7 @@ const HomePage = () => {
         // sortable={true}shadcn fxn
         // pagination={true}shadcn fxn
       />
+      <Button> + Create Volunteer</Button>
     </div>
   );
 };

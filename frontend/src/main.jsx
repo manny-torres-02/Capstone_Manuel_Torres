@@ -2,6 +2,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import EditEventPage from "./pages/EditEvent/EditEventPage";
+
 import "./index.css";
 import App from "./App.jsx";
 
@@ -11,7 +13,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <HomePage /> },
-      // { path: "about", element: <AboutPage /> },
+      { path: "/:id/editEvent", element: <EditEventPage /> },
       // other routes...
     ],
   },

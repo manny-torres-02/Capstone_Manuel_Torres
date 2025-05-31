@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import EditEventPage from "./pages/EditEvent/EditEventPage";
+import CreateVolunteerPage from "./pages/CreateVolunteer/CreateVolunteerPage";
 
 import "./index.css";
 import App from "./App.jsx";
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: "/createVolunteer", element: <CreateVolunteerPage /> },
       { path: "/:id/editEvent", element: <EditEventPage /> },
       // other routes...
     ],

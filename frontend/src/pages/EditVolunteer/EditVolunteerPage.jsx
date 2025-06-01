@@ -50,10 +50,24 @@ const EditVolunteerPage = () => {
   }, [id, apiURL]);
 
   // Handle submit
-  const handleSubmit = (updatedVolunteer) => {
+  const handleSubmit = async (updatedVolunteer) => {
     console.log("Volunteer updated successfully:", updatedVolunteer);
-    alert("Volunteer updated successfully!");
-    navigate("/");
+
+    // Option 1: Use the returned data
+    if (updatedVolunteer.categoryIds && updatedVolunteer.eventIds) {
+      setVolunteerData(updatedVolunteer);
+      alert("Volunteer updated successfully!");
+    } else {
+      // Option 2: Re-fetch from server to ensure consistency
+      try {
+        const response = await axios.get(`${apiURL}/volunteers/${id}`);
+        setVolunteerData(response.data);
+        alert("Volunteer updated successfully!");
+      } catch (error) {
+        console.error("Error re-fetching volunteer:", error);
+        alert("Update successful, but failed to refresh data");
+      }
+    }
   };
 
   const handleCancel = () => {

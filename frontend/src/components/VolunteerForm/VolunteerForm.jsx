@@ -46,11 +46,11 @@ const VolunteerForm = ({
   const form = useForm({
     resolver: zodResolver(volunteerFormSchema),
     defaultValues: {
-      name: initialData?.name || "",
-      email: initialData?.email || "",
-      phoneNumber: initialData?.phoneNumber || "",
-      categoryIds: initialData?.committees || [],
-      eventIds: initialData?.events || [],
+      name: "",
+      email: "",
+      phoneNumber: "",
+      categoryIds: [],
+      eventIds: [],
     },
   });
 
@@ -92,6 +92,54 @@ const VolunteerForm = ({
     fetchEvents();
   }, [apiURL]);
 
+  //refresh page to fill in intial data
+  useEffect(() => {
+    if (initialData) {
+      console.log("Setting form data with initialData:", initialData);
+
+      // Ensure we have arrays of strings for the IDs
+      let categoryIds = [];
+      let eventIds = [];
+
+      console.log(">>>>CATEGORYIDS -", initialData.categories);
+      // Handle categoryIds - check multiple possible sources
+      if (initialData.categoryIds && Array.isArray(initialData.categoryIds)) {
+        categoryIds = initialData.categoryIds.map((id) => id.toString());
+      } else if (
+        initialData.categories &&
+        Array.isArray(initialData.categories)
+      ) {
+        // Fix: Use 'categories' instead of 'committees'
+        categoryIds = initialData.categories.map((c) => c.id.toString());
+      }
+
+      // Handle eventIds - check multiple possible sources
+      if (initialData.eventIds && Array.isArray(initialData.eventIds)) {
+        eventIds = initialData.eventIds.map((id) => id.toString());
+      } else if (initialData.events && Array.isArray(initialData.events)) {
+        eventIds = initialData.events.map((e) => e.id.toString());
+      }
+
+      console.log("Processed categoryIds:", categoryIds);
+      console.log("Processed eventIds:", eventIds);
+
+      // Reset the form with new values
+      form.reset({
+        name: initialData.name || "",
+        email: initialData.email || "",
+        phoneNumber: initialData.phoneNumber || "",
+        categoryIds: categoryIds, // ← Use processed variable
+        eventIds: eventIds, // ← Use processed variable
+      });
+    }
+  }, [initialData, form]);
+
+  // Log current form values for debugging
+  const watchedValues = form.watch();
+  useEffect(() => {
+    console.log("Current form values:", watchedValues);
+  }, [watchedValues]);
+
   const saveVolunteer = async (formData) => {
     setIsSubmitting(true);
     try {
@@ -110,13 +158,27 @@ const VolunteerForm = ({
       let response;
 
       if (initialData?.id) {
-        response = await axios.put(
+        //Set up the code to update the volunteer
+        console.log(`Updating volunteer with ID: ${initialData.id}`);
+
+        response = await axios.patch(
           `${apiURL}/volunteers/${initialData.id}`,
-          formData
+          backendData
         );
         console.log("Volunteer updated successfully:", response.data);
+        if (response.data.categoryIds && response.data.eventIds) {
+          form.reset({
+            name: response.data.name || "",
+            email: response.data.email || "",
+            phoneNumber: response.data.phoneNumber || "",
+            categoryIds: response.data.categoryIds || [],
+            eventIds: response.data.eventIds || [],
+          });
+          console.log("Form updated with fresh data from server");
+        }
       } else {
-        response = await axios.post(`${apiURL}/volunteers`, formData);
+        console.log("Creating new volunteer");
+        response = await axios.post(`${apiURL}/volunteers`, backendData);
         console.log("Volunteer created successfully:", response.data);
       }
 
@@ -124,11 +186,14 @@ const VolunteerForm = ({
         onSubmit(response.data);
       }
 
-      form.reset();
+      if (!initialData?.id) {
+        form.reset();
+      }
 
       alert(
         `Volunteer ${initialData?.id ? "updated" : "created"} successfully!`
       );
+      console.log("Operation completed successfully");
     } catch (error) {
       console.error("Error saving volunteer:", error);
 
@@ -159,6 +224,23 @@ const VolunteerForm = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
+        {process.env.NODE_ENV === "development" && (
+          <div className="mb-4 p-3 bg-gray-100 rounded text-xs">
+            <strong>Debug Info:</strong>
+            <div>Mode: {initialData?.id ? "EDIT" : "CREATE"}</div>
+            <div>
+              Initial CategoryIds: {JSON.stringify(initialData?.categoryIds)}
+            </div>
+            <div>
+              Current Form CategoryIds:{" "}
+              {JSON.stringify(watchedValues.categoryIds)}
+            </div>
+            <div>Initial EventIds: {JSON.stringify(initialData?.eventIds)}</div>
+            <div>
+              Current Form EventIds: {JSON.stringify(watchedValues.eventIds)}
+            </div>
+          </div>
+        )}
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(saveVolunteer)}
@@ -241,6 +323,9 @@ const VolunteerForm = ({
                           name="categoryIds"
                           render={({ field }) => {
                             const committeeIdStr = committee.id.toString();
+                            const isChecked =
+                              field.value?.includes(committeeIdStr);
+
                             return (
                               <FormItem
                                 key={committee.id}
@@ -248,9 +333,7 @@ const VolunteerForm = ({
                               >
                                 <FormControl>
                                   <Checkbox
-                                    checked={field.value?.includes(
-                                      committeeIdStr
-                                    )}
+                                    checked={isChecked}
                                     onCheckedChange={(checked) => {
                                       return checked
                                         ? field.onChange([
@@ -375,12 +458,26 @@ const VolunteerForm = ({
 
             <div className="flex justify-end gap-4">
               {onCancel && (
-                <Button type="button" variant="outline" onClick={onCancel}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={onCancel}
+                  disabled={isSubmitting} // Add this
+                >
                   Cancel
                 </Button>
               )}
-              <Button type="submit" disabled={loading}>
-                {loading ? "Saving..." : "Save Volunteer"}
+              <Button
+                type="submit"
+                disabled={loading || isSubmitting} // Use isSubmitting instead of just loading
+              >
+                {isSubmitting
+                  ? initialData?.id
+                    ? "Updating..."
+                    : "Creating..."
+                  : initialData?.id
+                  ? "Update Volunteer"
+                  : "Create Volunteer"}
               </Button>
             </div>
           </form>

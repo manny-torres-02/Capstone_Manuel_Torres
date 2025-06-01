@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import axios from "axios";
 
-const eventFormSchema = z.object({
+const volunteerFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z
     .string()
@@ -26,8 +26,8 @@ const eventFormSchema = z.object({
     .optional()
     .or(z.literal("")),
   phoneNumber: z.string().optional(),
-  location: z.string().min(2, "Location is required"),
-  committees: z.array(z.string()).optional(), // Array of committee IDs
+  categoryIds: z.array(z.string()).optional(),
+  eventIds: z.array(z.string()).optional(),
 });
 
 const VolunteerForm = ({
@@ -39,17 +39,22 @@ const VolunteerForm = ({
   const apiURL = import.meta.env.VITE_APP_API_URL || "http://localhost:8080";
   const [committees, setCommittees] = useState([]);
   const [loadingCommittees, setLoadingCommittees] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [loadingEvents, setLoadingEvents] = useState(true);
 
   const form = useForm({
-    resolver: zodResolver(eventFormSchema),
+    resolver: zodResolver(volunteerFormSchema),
     defaultValues: {
       name: initialData?.name || "",
       email: initialData?.email || "",
       phoneNumber: initialData?.phoneNumber || "",
-      committees: initialData?.committees || [],
+      categoryIds: initialData?.committees || [],
+      eventIds: initialData?.events || [],
     },
   });
 
+  //Pull the committees
   useEffect(() => {
     const fetchCommittees = async () => {
       try {
@@ -68,7 +73,83 @@ const VolunteerForm = ({
     fetchCommittees();
   }, [apiURL]);
 
-  let saveVolunteer = () => {};
+  //pull the events
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        setLoadingEvents(true);
+        const response = await axios.get(`${apiURL}/events`);
+        console.log("Fetched events:", response.data);
+        setEvents(response.data);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+        setEvents([]);
+      } finally {
+        setLoadingEvents(false);
+      }
+    };
+
+    fetchEvents();
+  }, [apiURL]);
+
+  const saveVolunteer = async (formData) => {
+    setIsSubmitting(true);
+    try {
+      console.log("Submitting volunteer data:", formData);
+
+      //Make sure the data is set up correctly to be sent to the backend.
+      const backendData = {
+        name: formData.name,
+        email: formData.email || null, // Send null if empty
+        phoneNumber: formData.phoneNumber || null, // Send null if empty
+        categoryIds: formData.categoryIds?.map((id) => parseInt(id)) || [],
+        eventIds: formData.eventIds?.map((id) => parseInt(id)) || [],
+      };
+      console.log("Transformed data for backend:", backendData);
+
+      let response;
+
+      if (initialData?.id) {
+        response = await axios.put(
+          `${apiURL}/volunteers/${initialData.id}`,
+          formData
+        );
+        console.log("Volunteer updated successfully:", response.data);
+      } else {
+        response = await axios.post(`${apiURL}/volunteers`, formData);
+        console.log("Volunteer created successfully:", response.data);
+      }
+
+      if (onSubmit) {
+        onSubmit(response.data);
+      }
+
+      form.reset();
+
+      alert(
+        `Volunteer ${initialData?.id ? "updated" : "created"} successfully!`
+      );
+    } catch (error) {
+      console.error("Error saving volunteer:", error);
+
+      // Handle different error types
+      if (error.response) {
+        const errorMessage =
+          error.response.data?.message ||
+          error.response.data?.error ||
+          "Server error occurred";
+        alert(`Error: ${errorMessage}`);
+      } else if (error.request) {
+        alert(
+          "Error: Unable to connect to server. Please check your connection."
+        );
+      } else {
+        alert("Error: An unexpected error occurred while saving.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
@@ -79,10 +160,13 @@ const VolunteerForm = ({
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form
+            onSubmit={form.handleSubmit(saveVolunteer)}
+            className="space-y-6"
+          >
             <FormField
               control={form.control}
-              name="title"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Volunteer Name</FormLabel>
@@ -95,7 +179,7 @@ const VolunteerForm = ({
             />
             <FormField
               control={form.control}
-              name="title"
+              name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Volunteer Email</FormLabel>
@@ -109,7 +193,7 @@ const VolunteerForm = ({
 
             <FormField
               control={form.control}
-              name="title"
+              name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Volunteer Phone Number</FormLabel>
@@ -124,7 +208,7 @@ const VolunteerForm = ({
             {/* Committee Selection Field */}
             <FormField
               control={form.control}
-              name="committees"
+              name="categoryIds"
               render={() => (
                 <FormItem>
                   <div className="mb-4">
@@ -154,8 +238,9 @@ const VolunteerForm = ({
                         <FormField
                           key={committee.id}
                           control={form.control}
-                          name="committees"
+                          name="categoryIds"
                           render={({ field }) => {
+                            const committeeIdStr = committee.id.toString();
                             return (
                               <FormItem
                                 key={committee.id}
@@ -164,17 +249,18 @@ const VolunteerForm = ({
                                 <FormControl>
                                   <Checkbox
                                     checked={field.value?.includes(
-                                      committee.id
+                                      committeeIdStr
                                     )}
                                     onCheckedChange={(checked) => {
                                       return checked
                                         ? field.onChange([
                                             ...(field.value || []),
-                                            committee.id,
+                                            committeeIdStr,
                                           ])
                                         : field.onChange(
                                             field.value?.filter(
-                                              (value) => value !== committee.id
+                                              (value) =>
+                                                value !== committeeIdStr
                                             )
                                           );
                                     }}
@@ -194,6 +280,99 @@ const VolunteerForm = ({
                 </FormItem>
               )}
             />
+
+            {/* Events Selection Field */}
+            <FormField
+              control={form.control}
+              name="eventIds"
+              render={() => (
+                <FormItem>
+                  <div className="mb-4">
+                    <FormLabel className="text-base">
+                      Event Participation
+                    </FormLabel>
+                    <FormDescription>
+                      Select the events you would like to volunteer for
+                      (optional).
+                    </FormDescription>
+                  </div>
+
+                  {loadingEvents ? (
+                    <div className="text-center py-4">
+                      <p className="text-muted-foreground">Loading events...</p>
+                    </div>
+                  ) : events.length === 0 ? (
+                    <div className="text-center py-4">
+                      <p className="text-muted-foreground">
+                        No events available at this time.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {events.map((event) => (
+                        <FormField
+                          key={event.id}
+                          control={form.control}
+                          name="eventIds"
+                          render={({ field }) => {
+                            const eventIdStr = event.id.toString();
+                            return (
+                              <FormItem
+                                key={event.id}
+                                className="flex flex-row items-start space-x-3 space-y-0 border rounded-lg p-3"
+                              >
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value?.includes(eventIdStr)}
+                                    onCheckedChange={(checked) => {
+                                      return checked
+                                        ? field.onChange([
+                                            ...(field.value || []),
+                                            eventIdStr,
+                                          ])
+                                        : field.onChange(
+                                            field.value?.filter(
+                                              (value) => value !== eventIdStr
+                                            )
+                                          );
+                                    }}
+                                  />
+                                </FormControl>
+                                <div className="space-y-1 leading-none">
+                                  <FormLabel className="text-sm font-medium">
+                                    {event.title || event.name}
+                                  </FormLabel>
+                                  {event.description && (
+                                    <p className="text-xs text-muted-foreground">
+                                      {event.description}
+                                    </p>
+                                  )}
+                                  {event.date && (
+                                    <p className="text-xs text-muted-foreground">
+                                      Date:{" "}
+                                      {new Date(
+                                        event.date
+                                      ).toLocaleDateString()}
+                                    </p>
+                                  )}
+                                  {event.location && (
+                                    <p className="text-xs text-muted-foreground">
+                                      Location: {event.location}
+                                    </p>
+                                  )}
+                                </div>
+                              </FormItem>
+                            );
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <div className="flex justify-end gap-4">
               {onCancel && (
                 <Button type="button" variant="outline" onClick={onCancel}>

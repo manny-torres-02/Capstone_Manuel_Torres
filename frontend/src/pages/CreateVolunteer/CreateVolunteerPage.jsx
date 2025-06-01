@@ -5,7 +5,6 @@ import VolunteerForm from "../../components/VolunteerForm/VolunteerForm";
 const CreateVolunteerPage = () => {
   return (
     <>
-      <h1>CreateVolunteer PAGE</h1>
       <VolunteerForm />
     </>
   );

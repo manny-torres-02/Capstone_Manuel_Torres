@@ -48,6 +48,20 @@ const EditVolunteerPage = () => {
 
     fetchVolunteer();
   }, [id, apiURL]);
+
+  // Handle submit
+  const handleSubmit = (updatedVolunteer) => {
+    console.log("Volunteer updated successfully:", updatedVolunteer);
+    alert("Volunteer updated successfully!");
+    navigate("/");
+  };
+
+  const handleCancel = () => {
+    console.log("Edit cancelled");
+    // Navigate back to home page
+    navigate("/");
+  };
+
   return (
     <div className="edit-volunteer-page">
       <div className="container mx-auto p-4">
@@ -79,7 +93,11 @@ const EditVolunteerPage = () => {
           </ol>
         </nav>
         {/* Volunteer Form */}
-        <VolunteerForm initialData={volunteerData} />
+        <VolunteerForm
+          initialData={volunteerData}
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+        />
       </div>
     </div>
   );

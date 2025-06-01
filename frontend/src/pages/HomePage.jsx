@@ -14,7 +14,7 @@ const HomePage = () => {
   const handleEdit = (volunteer) => {
     console.log("Editing volunteer:", volunteer);
     // Navigate to edit page with volunteer ID
-    navigate(`/${volunteer.id}/edit`);
+    navigate(`/${volunteer.id}/editVolunteer`);
   };
 
   const volunteerColumns = [

@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import EditEventPage from "./pages/EditEvent/EditEventPage";
 import CreateVolunteerPage from "./pages/CreateVolunteer/CreateVolunteerPage";
-
+import EditVolunteerPage from "./pages/EditVolunteer/EditVolunteerPage";
 import "./index.css";
 import App from "./App.jsx";
 
@@ -15,6 +15,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "/createVolunteer", element: <CreateVolunteerPage /> },
+      { path: "/:id/editVolunteer", element: <EditVolunteerPage /> },
       { path: "/:id/editEvent", element: <EditEventPage /> },
       // other routes...
     ],

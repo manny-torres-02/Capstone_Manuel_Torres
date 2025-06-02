@@ -204,7 +204,7 @@ router.delete("/:id", async (req, res) => {
 
     const deleteVolunteer = await knex("volunteers").where({ id }).del(); //del returns # of deleted rows, technically truthy, but not a boolean.
     if (deleteVolunteer > 0) {
-      res.sendStatus(204); 
+      res.sendStatus(204);
     } else {
       res.status(404).send(`The volunteer ${id} is not found.`);
     }

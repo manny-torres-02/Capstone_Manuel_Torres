@@ -136,6 +136,7 @@ const VolunteerForm = ({
 
   // Log current form values for debugging
   const watchedValues = form.watch();
+  
   useEffect(() => {
     console.log("Current form values:", watchedValues);
   }, [watchedValues]);

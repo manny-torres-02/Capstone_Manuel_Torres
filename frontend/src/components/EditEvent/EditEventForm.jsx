@@ -110,7 +110,7 @@ const EditEventForm = ({
       } else {
         //Create New Event
         console.log("Creating new Event");
-        response = await axios.post(`${apiURL}/events/`, backendData);
+        response = await axios.post(`${apiURL}/events`, backendData);
         console.log("Event created successfully:", response.data);
       }
 
@@ -241,7 +241,25 @@ const EditEventForm = ({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="maxParticipants"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Max Participants (Optional)</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Enter maximum participants"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
+            {/* Committee */}
             <FormField
               control={form.control}
               name="categoryIds"
@@ -335,8 +353,8 @@ const EditEventForm = ({
                     ? "Updating..."
                     : "Creating..."
                   : initialData?.id
-                  ? "Update Volunteer"
-                  : "Create Volunteer"}
+                  ? "Update Event"
+                  : "Create Event"}
               </Button>
             </div>
           </form>

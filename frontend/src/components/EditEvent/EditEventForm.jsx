@@ -17,7 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import axios from "axios";
 
 const eventFormSchema = z.object({
-  title: z.string().min(2, "Title must be at least 2 characters"),
+  name: z.string().min(2, "Title must be at least 2 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   date: z.string().min(1, "Date is required"),
   location: z.string().min(2, "Location is required"),
@@ -33,11 +33,13 @@ const EditEventForm = ({
   const apiURL = import.meta.env.VITE_APP_API_URL || "http://localhost:8080";
   const [committees, setCommittees] = useState([]);
   const [loadingCommittees, setLoadingCommittees] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [events, setEvents] = useState([]);
 
   const form = useForm({
     resolver: zodResolver(eventFormSchema),
     defaultValues: {
-      title: initialData?.title || "",
+      name: initialData?.title || "",
       description: initialData?.description || "",
       date: initialData?.date || "",
       location: initialData?.location || "",
@@ -70,7 +72,7 @@ const EditEventForm = ({
     console.log("Current form values:", watchedValues);
   }, [watchedValues]);
 
-  const saveVolunteer = async (formData) => {
+  const saveEvent = async (formData) => {
     setIsSubmitting(true);
     try {
       console.log("Submitting volunteer data:", formData);
@@ -78,38 +80,41 @@ const EditEventForm = ({
       //Make sure the data is set up correctly to be sent to the backend.
       const backendData = {
         name: formData.name,
-        email: formData.email || null, // Send null if empty
-        phoneNumber: formData.phoneNumber || null, // Send null if empty
-        categoryIds: formData.categoryIds?.map((id) => parseInt(id)) || [],
-        eventIds: formData.eventIds?.map((id) => parseInt(id)) || [],
+        description: formData.description || null, // Send null if empty
+        date: formData.date || null, // Send null if empty
+        location: formData.location || "", // Send null if empty
+        maxParticipants: formData.eventIds?.map((id) => parseInt(id)) || [], //send null if empty
       };
       console.log("Transformed data for backend:", backendData);
 
       let response;
 
+      //if we are coming in to adjust event details.
       if (initialData?.id) {
-        //Set up the code to update the volunteer
-        console.log(`Updating volunteer with ID: ${initialData.id}`);
+        //Set up the code to update the event
+        console.log(`Updating Event with ID: ${initialData.id}`);
 
         response = await axios.patch(
-          `${apiURL}/volunteers/${initialData.id}`,
+          `${apiURL}/events/${initialData.id}`,
           backendData
         );
         console.log("Volunteer updated successfully:", response.data);
+
+        //Adjsut this
         if (response.data.categoryIds && response.data.eventIds) {
           form.reset({
             name: response.data.name || "",
-            email: response.data.email || "",
-            phoneNumber: response.data.phoneNumber || "",
-            categoryIds: response.data.categoryIds || [],
-            eventIds: response.data.eventIds || [],
+            description: response.data.description || "",
+            date: response.data.date || "",
+            location: response.data.location || [],
+            maxParticipants: response.data.maxParticipants || [],
           });
           console.log("Form updated with fresh data from server");
         }
       } else {
-        console.log("Creating new volunteer");
-        response = await axios.post(`${apiURL}/volunteers`, backendData);
-        console.log("Volunteer created successfully:", response.data);
+        console.log("Creating new Event");
+        response = await axios.post(`${apiURL}/events/`, backendData);
+        console.log("Event created successfully:", response.data);
       }
 
       if (onSubmit) {
@@ -154,11 +159,28 @@ const EditEventForm = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
+        {process.env.NODE_ENV === "development" && (
+          <div className="mb-4 p-3 bg-gray-100 rounded text-xs">
+            <strong>Debug Info:</strong>
+            <div>Mode: {initialData?.id ? "EDIT" : "CREATE"}</div>
+            <div>
+              Initial CategoryIds: {JSON.stringify(initialData?.categoryIds)}
+            </div>
+            <div>
+              Current Form CategoryIds:{" "}
+              {JSON.stringify(watchedValues.categoryIds)}
+            </div>
+            <div>Initial EventIds: {JSON.stringify(initialData?.eventIds)}</div>
+            <div>
+              Current Form EventIds: {JSON.stringify(watchedValues.eventIds)}
+            </div>
+          </div>
+        )}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(saveEvent)} className="space-y-6">
             <FormField
               control={form.control}
-              name="title"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Event Title</FormLabel>
@@ -217,12 +239,23 @@ const EditEventForm = ({
 
             <div className="flex justify-end gap-4">
               {onCancel && (
-                <Button type="button" variant="outline" onClick={onCancel}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={onCancel}
+                  disabled={isSubmitting}
+                >
                   Cancel
                 </Button>
               )}
-              <Button type="submit" disabled={loading}>
-                {loading ? "Saving..." : "Save Event"}
+              <Button type="submit" disabled={loading || isSubmitting}>
+                {isSubmitting
+                  ? initialData?.id
+                    ? "Updating..."
+                    : "Creating..."
+                  : initialData?.id
+                  ? "Update Volunteer"
+                  : "Create Volunteer"}
               </Button>
             </div>
           </form>

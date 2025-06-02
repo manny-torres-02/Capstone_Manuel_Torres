@@ -136,7 +136,7 @@ const VolunteerForm = ({
 
   // Log current form values for debugging
   const watchedValues = form.watch();
-  
+
   useEffect(() => {
     console.log("Current form values:", watchedValues);
   }, [watchedValues]);
@@ -463,7 +463,7 @@ const VolunteerForm = ({
                   type="button"
                   variant="outline"
                   onClick={onCancel}
-                  disabled={isSubmitting} // Add this
+                  disabled={isSubmitting}
                 >
                   Cancel
                 </Button>

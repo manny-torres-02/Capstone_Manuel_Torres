@@ -21,7 +21,7 @@ const eventFormSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   date: z.string().min(1, "Date is required"),
   location: z.string().min(2, "Location is required"),
-  maxParticipants: z.number().optional(),
+  maxParticipants: z.coerce.number().optional(),
 });
 
 const EditEventForm = ({
@@ -80,16 +80,19 @@ const EditEventForm = ({
       //Make sure the data is set up correctly to be sent to the backend.
       const backendData = {
         name: formData.name,
-        description: formData.description || null, // Send null if empty
-        date: formData.date || null, // Send null if empty
-        location: formData.location || "", // Send null if empty
-        maxParticipants: formData.eventIds?.map((id) => parseInt(id)) || [], //send null if empty
+        description: formData.description, // Send null if empty
+        date: formData.date, // Send null if empty
+        location: formData.location, // Send null if empty
+        maxParticipants: formData.maxParticipants
+          ? parseInt(formData.maxParticipants)
+          : null,
       };
       console.log("Transformed data for backend:", backendData);
 
       let response;
 
       //if we are coming in to adjust event details.
+      //UPDATE existing event
       if (initialData?.id) {
         //Set up the code to update the event
         console.log(`Updating Event with ID: ${initialData.id}`);
@@ -99,19 +102,8 @@ const EditEventForm = ({
           backendData
         );
         console.log("Volunteer updated successfully:", response.data);
-
-        //Adjsut this
-        if (response.data.categoryIds && response.data.eventIds) {
-          form.reset({
-            name: response.data.name || "",
-            description: response.data.description || "",
-            date: response.data.date || "",
-            location: response.data.location || [],
-            maxParticipants: response.data.maxParticipants || [],
-          });
-          console.log("Form updated with fresh data from server");
-        }
       } else {
+        //Create New Event
         console.log("Creating new Event");
         response = await axios.post(`${apiURL}/events/`, backendData);
         console.log("Event created successfully:", response.data);
@@ -125,9 +117,7 @@ const EditEventForm = ({
         form.reset();
       }
 
-      alert(
-        `Volunteer ${initialData?.id ? "updated" : "created"} successfully!`
-      );
+      alert(`Event ${initialData?.id ? "updated" : "created"} successfully!`);
       console.log("Operation completed successfully");
     } catch (error) {
       console.error("Error saving volunteer:", error);
@@ -137,8 +127,18 @@ const EditEventForm = ({
         const errorMessage =
           error.response.data?.message ||
           error.response.data?.error ||
+          error.response.data?.details ||
           "Server error occurred";
         alert(`Error: ${errorMessage}`);
+
+        //Log for errors/bugging...
+        console.error("Full error response:", {
+          status: error.response.status,
+          data: error.response.data,
+          url: error.config?.url,
+          method: error.config?.method,
+          sentData: backendData,
+        });
       } else if (error.request) {
         alert(
           "Error: Unable to connect to server. Please check your connection."

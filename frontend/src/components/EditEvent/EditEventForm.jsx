@@ -10,7 +10,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,6 +23,7 @@ const eventFormSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   date: z.string().min(1, "Date is required"),
   location: z.string().min(2, "Location is required"),
+  categoryIds: z.array(z.string()).optional(),
   maxParticipants: z.coerce.number().optional(),
 });
 
@@ -44,6 +47,7 @@ const EditEventForm = ({
       date: initialData?.date || "",
       location: initialData?.location || "",
       maxParticipants: initialData?.maxParticipants || "",
+      categoryIds: [],
     },
   });
 
@@ -86,6 +90,7 @@ const EditEventForm = ({
         maxParticipants: formData.maxParticipants
           ? parseInt(formData.maxParticipants)
           : null,
+        categoryIds: formData.categoryIds?.map((id) => parseInt(id)) || [],
       };
       console.log("Transformed data for backend:", backendData);
 
@@ -232,6 +237,82 @@ const EditEventForm = ({
                   <FormControl>
                     <Input placeholder="Enter location" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="categoryIds"
+              render={() => (
+                <FormItem>
+                  <div className="mb-4">
+                    <FormLabel className="text-base">
+                      Committee Membership
+                    </FormLabel>
+                    <FormDescription>
+                      Select the committees you would like to join (optional).
+                    </FormDescription>
+                  </div>
+
+                  {loadingCommittees ? (
+                    <div className="text-center py-4">
+                      <p className="text-muted-foreground">
+                        Loading committees...
+                      </p>
+                    </div>
+                  ) : committees.length === 0 ? (
+                    <div className="text-center py-4">
+                      <p className="text-muted-foreground">
+                        No committees available at this time.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {committees.map((committee) => (
+                        <FormField
+                          key={committee.id}
+                          control={form.control}
+                          name="categoryIds"
+                          render={({ field }) => {
+                            const committeeIdStr = committee.id.toString();
+                            const isChecked =
+                              field.value?.includes(committeeIdStr);
+
+                            return (
+                              <FormItem
+                                key={committee.id}
+                                className="flex flex-row items-start space-x-3 space-y-0"
+                              >
+                                <FormControl>
+                                  <Checkbox
+                                    checked={isChecked}
+                                    onCheckedChange={(checked) => {
+                                      return checked
+                                        ? field.onChange([
+                                            ...(field.value || []),
+                                            committeeIdStr,
+                                          ])
+                                        : field.onChange(
+                                            field.value?.filter(
+                                              (value) =>
+                                                value !== committeeIdStr
+                                            )
+                                          );
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormLabel className="text-sm font-normal">
+                                  {committee.name || committee.label}
+                                </FormLabel>
+                              </FormItem>
+                            );
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}

@@ -25,6 +25,7 @@ const eventFormSchema = z.object({
   location: z.string().min(2, "Location is required"),
   categoryIds: z.array(z.string()).optional(),
   maxParticipants: z.coerce.number().optional(),
+  volunteerIds: z.array(z.string()).optional(),
 });
 
 const EditEventForm = ({
@@ -38,6 +39,8 @@ const EditEventForm = ({
   const [loadingCommittees, setLoadingCommittees] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [events, setEvents] = useState([]);
+  const [volunteers, setVolunteers] = useState([]);
+  const [loadingVolunteers, setLoadingVolunteers] = useState(true);
 
   const form = useForm({
     resolver: zodResolver(eventFormSchema),
@@ -48,6 +51,7 @@ const EditEventForm = ({
       location: initialData?.location || "",
       maxParticipants: initialData?.maxParticipants || "",
       categoryIds: [],
+      volunteerIds: [],
     },
   });
 
@@ -67,6 +71,25 @@ const EditEventForm = ({
     };
 
     fetchCommittees();
+  }, [apiURL]);
+
+  // Load volunteers
+  useEffect(() => {
+    const fetchVolunteers = async () => {
+      try {
+        setLoadingVolunteers(true);
+        const response = await axios.get(`${apiURL}/volunteers`);
+        console.log("Fetched volunteers:", response.data);
+        setVolunteers(response.data);
+      } catch (error) {
+        console.error("Error fetching volunteers:", error);
+        setVolunteers([]);
+      } finally {
+        setLoadingVolunteers(false);
+      }
+    };
+
+    fetchVolunteers();
   }, [apiURL]);
 
   //Log Values for debugging
@@ -91,6 +114,7 @@ const EditEventForm = ({
           ? parseInt(formData.maxParticipants)
           : null,
         categoryIds: formData.categoryIds?.map((id) => parseInt(id)) || [],
+        volunteerIds: formData.volunteerIds?.map((id) => parseInt(id)) || [],
       };
       console.log("Transformed data for backend:", backendData);
 
@@ -175,10 +199,15 @@ const EditEventForm = ({
               Current Form CategoryIds:{" "}
               {JSON.stringify(watchedValues.categoryIds)}
             </div>
-            <div>Initial EventIds: {JSON.stringify(initialData?.eventIds)}</div>
             <div>
-              Current Form EventIds: {JSON.stringify(watchedValues.eventIds)}
+              Initial VolunteerIds: {JSON.stringify(initialData?.volunteerIds)}
             </div>
+            <div>
+              Current Form VolunteerIds:{" "}
+              {JSON.stringify(watchedValues.volunteerIds)}
+            </div>
+            <div>Available Volunteers: {volunteers.length}</div>
+            <div>Loading Volunteers: {loadingVolunteers ? "YES" : "NO"}</div>
           </div>
         )}
         <Form {...form}>
@@ -324,6 +353,108 @@ const EditEventForm = ({
                                 <FormLabel className="text-sm font-normal">
                                   {committee.name || committee.label}
                                 </FormLabel>
+                              </FormItem>
+                            );
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Volunteer Section*/}
+            <FormField
+              control={form.control}
+              name="volunteerIds"
+              render={() => (
+                <FormItem>
+                  <div className="mb-4">
+                    <FormLabel className="text-base">
+                      Volunteer Assignment
+                    </FormLabel>
+                    <FormDescription>
+                      Select volunteers to assign to this event (optional).
+                    </FormDescription>
+                  </div>
+
+                  {loadingVolunteers ? (
+                    <div className="text-center py-4">
+                      <p className="text-muted-foreground">
+                        Loading volunteers...
+                      </p>
+                    </div>
+                  ) : volunteers.length === 0 ? (
+                    <div className="text-center py-4">
+                      <p className="text-muted-foreground">
+                        No volunteers available at this time.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-3 max-h-64 overflow-y-auto border rounded-lg p-3">
+                      {volunteers.map((volunteer) => (
+                        <FormField
+                          key={volunteer.id}
+                          control={form.control}
+                          name="volunteerIds"
+                          render={({ field }) => {
+                            const volunteerIdStr = volunteer.id.toString();
+                            const isChecked =
+                              field.value?.includes(volunteerIdStr);
+
+                            return (
+                              <FormItem
+                                key={volunteer.id}
+                                className="flex flex-row items-start space-x-3 space-y-0 border rounded-lg p-3"
+                              >
+                                <FormControl>
+                                  <Checkbox
+                                    checked={isChecked}
+                                    onCheckedChange={(checked) => {
+                                      const currentValues = field.value || [];
+
+                                      if (checked) {
+                                        field.onChange([
+                                          ...currentValues,
+                                          volunteerIdStr,
+                                        ]);
+                                      } else {
+                                        field.onChange(
+                                          currentValues.filter(
+                                            (value) => value !== volunteerIdStr
+                                          )
+                                        );
+                                      }
+                                    }}
+                                  />
+                                </FormControl>
+                                <div className="space-y-1 leading-none flex-1">
+                                  <FormLabel className="text-sm font-medium">
+                                    {volunteer.name}
+                                  </FormLabel>
+                                  {volunteer.email && (
+                                    <p className="text-xs text-muted-foreground">
+                                      Email: {volunteer.email}
+                                    </p>
+                                  )}
+                                  {volunteer.phoneNumber && (
+                                    <p className="text-xs text-muted-foreground">
+                                      Phone: {volunteer.phoneNumber}
+                                    </p>
+                                  )}
+                                  {/* Show volunteer's committees if available */}
+                                  {volunteer.committees &&
+                                    volunteer.committees.length > 0 && (
+                                      <p className="text-xs text-muted-foreground">
+                                        Committees:{" "}
+                                        {volunteer.committees
+                                          .map((c) => c.name)
+                                          .join(", ")}
+                                      </p>
+                                    )}
+                                </div>
                               </FormItem>
                             );
                           }}

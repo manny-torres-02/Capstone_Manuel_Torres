@@ -51,17 +51,17 @@ const EditEventPage = () => {
   }, [id, apiURL]);
 
   const handleSubmit = async (updatedEvent) => {
-    console.log("Volunteer updated successfully:", updatedEvent);
+    console.log("Event updated successfully:", updatedEvent);
 
     // Option 1: Use the returned data
     if (updatedEvent.categoryIds && updatedEvent.eventIds) {
-      setVolunteerData(updatedEvent);
+      setEventData(updatedEvent);
       alert("Event updated successfully!");
     } else {
       // Try 2: Re-fetch from server to ensure consistency if 1st chance didnt work...
       try {
         const response = await axios.get(`${apiURL}/events/${id}`);
-        setVolunteerData(response.data);
+        setEventData(response.data);
         alert("Event updated successfully!");
       } catch (error) {
         console.error("Error re-fetching event:", error);
@@ -75,6 +75,51 @@ const EditEventPage = () => {
     // Navigate back to home page
     navigate("/");
   };
+
+  //Make sure the backend data is correct...
+  useEffect(() => {
+    const fetchEvent = async () => {
+      if (!id) {
+        setError("No Event ID provided");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(null);
+
+        console.log(`Fetching event with ID: ${id}`);
+        const response = await axios.get(`${apiURL}/events/${id}`);
+
+        console.log("Raw event data received:", response.data);
+        console.log("Event data structure:", {
+          hasTitle: !!response.data.title,
+          hasName: !!response.data.name,
+          hasDescription: !!response.data.description,
+          hasDate: !!response.data.date,
+          hasLocation: !!response.data.location,
+          hasMaxParticipants: !!response.data.maxParticipants,
+          hasCategoryIds: !!response.data.categoryIds,
+          hasCategories: !!response.data.categories,
+          hasVolunteerIds: !!response.data.volunteerIds,
+          hasVolunteers: !!response.data.volunteers,
+          categoryIds: response.data.categoryIds,
+          categories: response.data.categories,
+          volunteerIds: response.data.volunteerIds,
+          volunteers: response.data.volunteers,
+        });
+
+        setEventData(response.data);
+      } catch (error) {
+        // ... error handling
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvent();
+  }, [id, apiURL]);
 
   return (
     <>

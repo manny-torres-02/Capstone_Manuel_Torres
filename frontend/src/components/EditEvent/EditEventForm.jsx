@@ -99,6 +99,62 @@ const EditEventForm = ({
     console.log("Current form values:", watchedValues);
   }, [watchedValues]);
 
+  // useEffect to check and then fill in the data
+  useEffect(() => {
+    if (initialData) {
+      console.log("Setting form data with initialData:", initialData);
+
+      // Process the category and volunteer IDs
+      let categoryIds = [];
+      let volunteerIds = [];
+
+      // Handle categoryIds - check for 'categories' array of objects or direct categoryIds
+      if (initialData.categoryIds && Array.isArray(initialData.categoryIds)) {
+        categoryIds = initialData.categoryIds.map((id) => id.toString());
+      } else if (
+        initialData.categories &&
+        Array.isArray(initialData.categories)
+      ) {
+        categoryIds = initialData.categories.map((c) => c.id.toString());
+      }
+
+      // Handle volunteerIds - check for 'volunteers' array of objects or direct volunteerIds
+      if (initialData.volunteerIds && Array.isArray(initialData.volunteerIds)) {
+        volunteerIds = initialData.volunteerIds.map((id) => id.toString());
+      } else if (
+        initialData.volunteers &&
+        Array.isArray(initialData.volunteers)
+      ) {
+        volunteerIds = initialData.volunteers.map((v) => v.id.toString());
+      }
+
+      console.log("Processed categoryIds:", categoryIds);
+      console.log("Processed volunteerIds:", volunteerIds);
+
+      // Format the date properly (backend might return full datetime)
+      let formattedDate = initialData.date;
+      if (formattedDate && formattedDate.includes("T")) {
+        formattedDate = formattedDate.split("T")[0]; // Get just the date part
+      }
+
+      // Reset the form with the initial data
+      form.reset({
+        name: initialData.title || initialData.name || "",
+        description: initialData.description || "",
+        date: formattedDate || "",
+        location: initialData.location || "",
+        maxParticipants: initialData.maxParticipants?.toString() || "",
+        categoryIds: categoryIds,
+        volunteerIds: volunteerIds,
+      });
+
+      console.log(
+        "Form reset with initial data. Current values:",
+        form.getValues()
+      );
+    }
+  }, [initialData, form]);
+
   const saveEvent = async (formData) => {
     setIsSubmitting(true);
     try {
@@ -192,6 +248,20 @@ const EditEventForm = ({
           <div className="mb-4 p-3 bg-gray-100 rounded text-xs">
             <strong>Debug Info:</strong>
             <div>Mode: {initialData?.id ? "EDIT" : "CREATE"}</div>
+            <div>Has Initial Data: {initialData ? "YES" : "NO"}</div>
+            <div>
+              Initial Data Keys:{" "}
+              {initialData ? Object.keys(initialData).join(", ") : "None"}
+            </div>
+            <div>
+              Initial Title/Name:{" "}
+              {initialData?.title || initialData?.name || "None"}
+            </div>
+            <div>Form Name Value: {watchedValues.name || "Empty"}</div>
+            <div>
+              Form Description Value: {watchedValues.description || "Empty"}
+            </div>
+            <div>Form Date Value: {watchedValues.date || "Empty"}</div>
             <div>
               Initial CategoryIds: {JSON.stringify(initialData?.categoryIds)}
             </div>
@@ -206,8 +276,6 @@ const EditEventForm = ({
               Current Form VolunteerIds:{" "}
               {JSON.stringify(watchedValues.volunteerIds)}
             </div>
-            <div>Available Volunteers: {volunteers.length}</div>
-            <div>Loading Volunteers: {loadingVolunteers ? "YES" : "NO"}</div>
           </div>
         )}
         <Form {...form}>

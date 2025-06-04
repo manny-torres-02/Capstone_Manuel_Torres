@@ -79,6 +79,16 @@ const Navigation = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
+                  to="/showEvents"
+                  className="px-4 py-2 text-foreground hover:text-primary"
+                >
+                  show Event
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
                   to="/createEvent"
                   className="px-4 py-2 text-foreground hover:text-primary"
                 >
@@ -137,6 +147,13 @@ const Navigation = () => {
                 About Us
               </Link>
               <Link
+                to="/showEvents"
+                className="block px-2 py-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                List of Events
+              </Link>
+              <Link
                 to="/createVolunteer"
                 className="block px-2 py-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -148,7 +165,7 @@ const Navigation = () => {
                 className="block px-2 py-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Create an Event 
+                Create an Event
               </Link>
             </nav>
           </div>

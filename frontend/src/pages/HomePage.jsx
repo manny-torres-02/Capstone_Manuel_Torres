@@ -4,7 +4,7 @@ import Navigation from "../components/Nav/Navigation";
 import DataTable from "../components/Table/Table";
 import { Edit, Trash2 } from "lucide-react";
 import { Button, buttonVariants } from "../components/ui/button";
-import { useNavigate } from "react-router-dom"; // Add this import
+import { useNavigate } from "react-router-dom"; 
 
 const HomePage = () => {
   const apiURL = import.meta.env.VITE_APP_API_URL || "http://localhost:8080/";

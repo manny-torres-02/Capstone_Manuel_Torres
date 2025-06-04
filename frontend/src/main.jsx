@@ -6,6 +6,8 @@ import EditEventPage from "./pages/EditEvent/EditEventPage";
 import CreateVolunteerPage from "./pages/CreateVolunteer/CreateVolunteerPage";
 import EditVolunteerPage from "./pages/EditVolunteer/EditVolunteerPage";
 import CreateEventPage from "./pages/CreateEvent/CreateEventPage";
+import EventsListPage from "./pages/EventsList/EventsListPage";
+
 import "./index.css";
 import App from "./App.jsx";
 
@@ -17,6 +19,7 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/createVolunteer", element: <CreateVolunteerPage /> },
       { path: "/:id/editVolunteer", element: <EditVolunteerPage /> },
+      { path: "/showEvents", element: <EventsListPage /> },
       { path: "/createEvent", element: <CreateEventPage /> },
       { path: "/:id/editEvent", element: <EditEventPage /> },
       // other routes...

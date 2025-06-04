@@ -53,12 +53,12 @@ const EditVolunteerPage = () => {
   const handleSubmit = async (updatedVolunteer) => {
     console.log("Volunteer updated successfully:", updatedVolunteer);
 
-    // Option 1: Use the returned data
+    // Try 1: Use the returned data
     if (updatedVolunteer.categoryIds && updatedVolunteer.eventIds) {
       setVolunteerData(updatedVolunteer);
       alert("Volunteer updated successfully!");
     } else {
-      // Option 2: Re-fetch from server to ensure consistency
+      // Try 2: Re-fetch from server to ensure consistency if 1st chance didnt work...
       try {
         const response = await axios.get(`${apiURL}/volunteers/${id}`);
         setVolunteerData(response.data);

@@ -13,3 +13,10 @@ If you are developing a production application, we recommend using TypeScript wi
 
 
 ### Add imports to files that improt tailwind
+
+
+### TO DO List items
+[ ] - Add volunteers per card on the Event List page 
+[ ] - Desktop view - events list page - 
+  - Convert this into double lined list per event? 
+[ ] - 

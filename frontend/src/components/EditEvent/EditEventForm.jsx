@@ -461,7 +461,10 @@ const EditEventForm = ({
                       </p>
                     </div>
                   ) : (
-                    <div className="space-y-3 max-h-64 overflow-y-auto border rounded-lg p-3">
+                    <div
+                      //TODO: Assess the feasibility of <div className="max-h-64 overflow-y-auto p-3 space-y-3">
+                      className="max-h-64 overflow-y-auto p-3 space-y-3"
+                    >
                       {volunteers.map((volunteer) => (
                         <FormField
                           key={volunteer.id}
@@ -534,6 +537,33 @@ const EditEventForm = ({
                 </FormItem>
               )}
             />
+
+            <form
+              action="https://www.paypal.com/donate"
+              method="post"
+              target="_top"
+            >
+              <input
+                type="hidden"
+                name="hosted_button_id"
+                value="B8LRAR6TL8WFU"
+              />
+              <input
+                type="image"
+                src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+                border="0"
+                name="submit"
+                title="PayPal - The safer, easier way to pay online!"
+                alt="Donate with PayPal button"
+              />
+              <img
+                alt=""
+                border="0"
+                src="https://www.paypal.com/en_US/i/scr/pixel.gif"
+                width="1"
+                height="1"
+              />
+            </form>
 
             <div className="flex justify-end gap-4">
               {onCancel && (

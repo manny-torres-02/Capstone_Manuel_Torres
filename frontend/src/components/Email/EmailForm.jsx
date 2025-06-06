@@ -36,7 +36,7 @@ const EmailForm = ({ initialData, onSubmit, onCancel, loading = false }) => {
     },
   });
 
-  //set up event handler. 
+  //set up event handler.
   const handleSubmit = async (formData) => {
     console.log("Email form submitted:", formData);
 
@@ -57,20 +57,51 @@ const EmailForm = ({ initialData, onSubmit, onCancel, loading = false }) => {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={{}} className="space-y-6">
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="space-y-6"
+            >
               <FormField
                 name="emailSubject"
-                // conrol={form}
+                control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Event Title</FormLabel>
+                    <FormLabel> Subject</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter event title" {...field} />
+                      <Input placeholder="Enter Email subject" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
+              <FormField
+                name="emailMessage"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Message</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Enter your message"
+                        rows={6}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex justify-end gap-4">
+                {onCancel && (
+                  <Button type="button" variant="outline" onClick={onCancel}>
+                    Cancel
+                  </Button>
+                )}
+                <Button type="submit" disabled={loading}>
+                  {loading ? "Sending..." : "Send Email"}
+                </Button>
+              </div>
             </form>
           </Form>
         </CardContent>

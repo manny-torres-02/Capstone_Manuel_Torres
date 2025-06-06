@@ -99,7 +99,7 @@ const Navigation = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  to="/Email"
+                  to="/email"
                   className="px-4 py-2 text-foreground hover:text-primary"
                 >
                   Create Email
@@ -176,6 +176,13 @@ const Navigation = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Create an Event
+              </Link>
+              <Link
+                to="/email"
+                className="block px-2 py-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Create Email
               </Link>
             </nav>
           </div>

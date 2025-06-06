@@ -96,6 +96,16 @@ const Navigation = () => {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/Email"
+                  className="px-4 py-2 text-foreground hover:text-primary"
+                >
+                  Create Email
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
         <button

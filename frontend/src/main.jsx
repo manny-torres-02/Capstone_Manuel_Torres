@@ -7,6 +7,7 @@ import CreateVolunteerPage from "./pages/CreateVolunteer/CreateVolunteerPage";
 import EditVolunteerPage from "./pages/EditVolunteer/EditVolunteerPage";
 import CreateEventPage from "./pages/CreateEvent/CreateEventPage";
 import EventsListPage from "./pages/EventsList/EventsListPage";
+import EmailForm from "./components/Email/EmailForm";
 
 import "./index.css";
 import App from "./App.jsx";
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: "/showEvents", element: <EventsListPage /> },
       { path: "/createEvent", element: <CreateEventPage /> },
       { path: "/:id/editEvent", element: <EditEventPage /> },
+      { path: "/email", element: <EmailForm /> },
       // other routes...
     ],
   },

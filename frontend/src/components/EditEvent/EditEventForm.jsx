@@ -293,7 +293,6 @@ const EditEventForm = ({
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="description"
@@ -310,7 +309,6 @@ const EditEventForm = ({
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="date"
@@ -324,7 +322,6 @@ const EditEventForm = ({
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="location"
@@ -355,7 +352,6 @@ const EditEventForm = ({
                 </FormItem>
               )}
             />
-
             {/* Committee */}
             <FormField
               control={form.control}
@@ -432,12 +428,12 @@ const EditEventForm = ({
                 </FormItem>
               )}
             />
-
             {/* Volunteer Section*/}
+
             <FormField
               control={form.control}
               name="volunteerIds"
-              render={() => (
+              render={({ field }) => (
                 <FormItem>
                   <div className="mb-4">
                     <FormLabel className="text-base">
@@ -461,83 +457,70 @@ const EditEventForm = ({
                       </p>
                     </div>
                   ) : (
-                    <div
-                      //TODO: Assess the feasibility of <div className="max-h-64 overflow-y-auto p-3 space-y-3">
-                      className="max-h-64 overflow-y-auto p-3 space-y-3"
-                    >
-                      {volunteers.map((volunteer) => (
-                        <FormField
-                          key={volunteer.id}
-                          control={form.control}
-                          name="volunteerIds"
-                          render={({ field }) => {
-                            const volunteerIdStr = volunteer.id.toString();
-                            const isChecked =
-                              field.value?.includes(volunteerIdStr);
+                    <div className="max-h-64 overflow-y-auto p-3 space-y-3 border rounded-lg">
+                      {volunteers.map((volunteer) => {
+                        const volunteerIdStr = volunteer.id.toString();
+                        const isChecked = field.value?.includes(volunteerIdStr);
 
-                            return (
-                              <FormItem
-                                key={volunteer.id}
-                                className="flex flex-row items-start space-x-3 space-y-0 border rounded-lg p-3"
-                              >
-                                <FormControl>
-                                  <Checkbox
-                                    checked={isChecked}
-                                    onCheckedChange={(checked) => {
-                                      const currentValues = field.value || [];
+                        return (
+                          <FormItem
+                            key={volunteer.id}
+                            className="flex flex-row items-start space-x-3 space-y-0 border rounded-lg p-3 hover:bg-gray-50 transition-colors"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={isChecked}
+                                onCheckedChange={(checked) => {
+                                  const currentValues = field.value || [];
 
-                                      if (checked) {
-                                        field.onChange([
-                                          ...currentValues,
-                                          volunteerIdStr,
-                                        ]);
-                                      } else {
-                                        field.onChange(
-                                          currentValues.filter(
-                                            (value) => value !== volunteerIdStr
-                                          )
-                                        );
-                                      }
-                                    }}
-                                  />
-                                </FormControl>
-                                <div className="space-y-1 leading-none flex-1">
-                                  <FormLabel className="text-sm font-medium">
-                                    {volunteer.name}
-                                  </FormLabel>
-                                  {volunteer.email && (
-                                    <p className="text-xs text-muted-foreground">
-                                      Email: {volunteer.email}
-                                    </p>
-                                  )}
-                                  {volunteer.phoneNumber && (
-                                    <p className="text-xs text-muted-foreground">
-                                      Phone: {volunteer.phoneNumber}
-                                    </p>
-                                  )}
-                                  {/* Show volunteer's committees if available */}
-                                  {volunteer.committees &&
-                                    volunteer.committees.length > 0 && (
-                                      <p className="text-xs text-muted-foreground">
-                                        Committees:{" "}
-                                        {volunteer.committees
-                                          .map((c) => c.name)
-                                          .join(", ")}
-                                      </p>
-                                    )}
-                                </div>
-                              </FormItem>
-                            );
-                          }}
-                        />
-                      ))}
+                                  if (checked) {
+                                    field.onChange([
+                                      ...currentValues,
+                                      volunteerIdStr,
+                                    ]);
+                                  } else {
+                                    field.onChange(
+                                      currentValues.filter(
+                                        (value) => value !== volunteerIdStr
+                                      )
+                                    );
+                                  }
+                                }}
+                              />
+                            </FormControl>
+                            <div className="space-y-1 leading-none flex-1">
+                              <FormLabel className="text-sm font-medium cursor-pointer">
+                                {volunteer.name}
+                              </FormLabel>
+                              {volunteer.email && (
+                                <p className="text-xs text-muted-foreground">
+                                  Email: {volunteer.email}
+                                </p>
+                              )}
+                              {volunteer.phoneNumber && (
+                                <p className="text-xs text-muted-foreground">
+                                  Phone: {volunteer.phoneNumber}
+                                </p>
+                              )}
+                              {volunteer.committees &&
+                                volunteer.committees.length > 0 && (
+                                  <p className="text-xs text-muted-foreground">
+                                    Committees:{" "}
+                                    {volunteer.committees
+                                      .map((c) => c.name)
+                                      .join(", ")}
+                                  </p>
+                                )}
+                            </div>
+                          </FormItem>
+                        );
+                      })}
                     </div>
                   )}
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <form
               action="https://www.paypal.com/donate"
               method="post"
@@ -564,7 +547,6 @@ const EditEventForm = ({
                 height="1"
               />
             </form>
-
             <div className="flex justify-end gap-4">
               {onCancel && (
                 <Button

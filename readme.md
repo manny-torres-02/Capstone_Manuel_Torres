@@ -1,3 +1,13 @@
+# How To Run
+
+- npm install in front end and backend folders
+- in backend folder: 
+  - npm run migrate:latest
+  - npm run seed
+- set up environment variables in frontend and backend folders 
+- npm run dev
+
+
 # Project Title
 
 RootedReach
@@ -10,6 +20,7 @@ Community organizations have a mission to serve the community and to offer a lif
 
 The Board maintains outreach through far 10+ groups and and beyond 20+ email groups that makes it very difficult to make contact with the right group. This can be a bit of a confusing task to remember which group is the most updated for the current purpose. On top of this managing a rotating list of volunteers that want to help out on very specific events can be very convoluted.
 
+- [How To Run](#how-to-run)
 - [Project Title](#project-title)
   - [Overview](#overview)
 - [Priority of implementation](#priority-of-implementation)
@@ -422,7 +433,7 @@ Parameters (just one field will need to be different):
 ]
 
 **Delete /Volunteers/:id** (done)
- 
+
 - Deletes a Volunteer/Contact
 
 Parameters (just one field will need to be different):

@@ -4,13 +4,14 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 //Credentials loaded from AWS File
 //This is the region currently used by default
 const sesClient = new SESClient({
-  region: "us-east-1",
+  region: process.env.AWS_REGION || "us-east-1",
 });
 
 class EmailService {
   constructor() {
     //Verified Email/REgistered Email.
-    this.fromEmail = "manueljosetorres02@gmail.com";
+    this.fromEmail =
+      process.env.SES_FROM_EMAIL || "manueljosetorres02@gmail.com";
   }
 
   async sendEmail({ to, subject, body, isHtml = false }) {

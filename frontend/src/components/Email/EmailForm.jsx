@@ -57,7 +57,7 @@ const EmailForm = ({ initialData, onSubmit, onCancel, loading = false }) => {
     fetchVolunteers();
   }, [apiURL]);
 
-  //set up event handler.
+  //set up event handler
   const handleSubmit = async (formData) => {
     console.log("Email form submitted:", formData);
     setSending(true);
@@ -160,7 +160,7 @@ const EmailForm = ({ initialData, onSubmit, onCancel, loading = false }) => {
                       </div>
                     ) : (
                       <div className="border rounded-lg p-3">
-                        <div className="max-h-64 overflow-y-auto space-y-3">
+                        <div className="space-y-3">
                           {volunteers.map((volunteer) => (
                             <FormField
                               key={volunteer.id}

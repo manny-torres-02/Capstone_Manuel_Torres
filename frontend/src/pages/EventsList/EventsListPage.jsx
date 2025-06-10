@@ -149,7 +149,7 @@ const EventsListPage = () => {
   console.log("Event Data:", eventData);
   return (
     <div>
-      <DataTable data={eventData} title="events" columns={eventColumns} />
+      <DataTable data={eventData} title="Our Events" columns={eventColumns} />
       <Button onClick={handleCreateNew}> + Create event</Button>
     </div>
   );

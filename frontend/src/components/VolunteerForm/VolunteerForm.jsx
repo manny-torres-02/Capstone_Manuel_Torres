@@ -95,13 +95,10 @@ const VolunteerForm = ({
   //refresh page to fill in intial data
   useEffect(() => {
     if (initialData) {
-      console.log("Setting form data with initialData:", initialData);
-
       // Ensure we have arrays of strings for the IDs
       let categoryIds = [];
       let eventIds = [];
 
-      console.log(">>>>CATEGORYIDS -", initialData.categories);
       // Handle categoryIds - check multiple possible sources
       if (initialData.categoryIds && Array.isArray(initialData.categoryIds)) {
         categoryIds = initialData.categoryIds.map((id) => id.toString());
@@ -109,27 +106,24 @@ const VolunteerForm = ({
         initialData.categories &&
         Array.isArray(initialData.categories)
       ) {
-        // Fix: Use 'categories' instead of 'committees'
+        // Find Categories
         categoryIds = initialData.categories.map((c) => c.id.toString());
       }
 
-      // Handle eventIds - check multiple possible sources
+      // Check all the sources for event ids
       if (initialData.eventIds && Array.isArray(initialData.eventIds)) {
         eventIds = initialData.eventIds.map((id) => id.toString());
       } else if (initialData.events && Array.isArray(initialData.events)) {
         eventIds = initialData.events.map((e) => e.id.toString());
       }
 
-      console.log("Processed categoryIds:", categoryIds);
-      console.log("Processed eventIds:", eventIds);
-
       // Reset the form with new values
       form.reset({
         name: initialData.name || "",
         email: initialData.email || "",
         phoneNumber: initialData.phoneNumber || "",
-        categoryIds: categoryIds, // ← Use processed variable
-        eventIds: eventIds, // ← Use processed variable
+        categoryIds: categoryIds,
+        eventIds: eventIds,
       });
     }
   }, [initialData, form]);
@@ -137,9 +131,7 @@ const VolunteerForm = ({
   // Log current form values for debugging
   const watchedValues = form.watch();
 
-  useEffect(() => {
-    console.log("Current form values:", watchedValues);
-  }, [watchedValues]);
+  useEffect(() => {}, [watchedValues]);
 
   const saveVolunteer = async (formData) => {
     setIsSubmitting(true);
@@ -149,8 +141,8 @@ const VolunteerForm = ({
       //Make sure the data is set up correctly to be sent to the backend.
       const backendData = {
         name: formData.name,
-        email: formData.email || null, // Send null if empty
-        phoneNumber: formData.phoneNumber || null, // Send null if empty
+        email: formData.email || null,
+        phoneNumber: formData.phoneNumber || null,
         categoryIds: formData.categoryIds?.map((id) => parseInt(id)) || [],
         eventIds: formData.eventIds?.map((id) => parseInt(id)) || [],
       };
@@ -175,12 +167,9 @@ const VolunteerForm = ({
             categoryIds: response.data.categoryIds || [],
             eventIds: response.data.eventIds || [],
           });
-          console.log("Form updated with fresh data from server");
         }
       } else {
-        console.log("Creating new volunteer");
         response = await axios.post(`${apiURL}/volunteers`, backendData);
-        console.log("Volunteer created successfully:", response.data);
       }
 
       if (onSubmit) {
@@ -225,23 +214,6 @@ const VolunteerForm = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {process.env.NODE_ENV === "development" && (
-          <div className="mb-4 p-3 bg-gray-100 rounded text-xs">
-            <strong>Debug Info:</strong>
-            <div>Mode: {initialData?.id ? "EDIT" : "CREATE"}</div>
-            <div>
-              Initial CategoryIds: {JSON.stringify(initialData?.categoryIds)}
-            </div>
-            <div>
-              Current Form CategoryIds:{" "}
-              {JSON.stringify(watchedValues.categoryIds)}
-            </div>
-            <div>Initial EventIds: {JSON.stringify(initialData?.eventIds)}</div>
-            <div>
-              Current Form EventIds: {JSON.stringify(watchedValues.eventIds)}
-            </div>
-          </div>
-        )}
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(saveVolunteer)}

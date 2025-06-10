@@ -17,6 +17,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
+      //Routes
       { index: true, element: <HomePage /> },
       { path: "/createVolunteer", element: <CreateVolunteerPage /> },
       { path: "/:id/editVolunteer", element: <EditVolunteerPage /> },
@@ -24,7 +25,6 @@ const router = createBrowserRouter([
       { path: "/createEvent", element: <CreateEventPage /> },
       { path: "/:id/editEvent", element: <EditEventPage /> },
       { path: "/email", element: <EmailGroup /> },
-      // other routes...
     ],
   },
 ]);

@@ -95,20 +95,16 @@ const EditEventForm = ({
   //Log Values for debugging
   const watchedValues = form.watch();
 
-  useEffect(() => {
-    console.log("Current form values:", watchedValues);
-  }, [watchedValues]);
+  useEffect(() => {}, [watchedValues]);
 
-  // useEffect to check and then fill in the data
+  // Check if data is passed in, then pass it in
   useEffect(() => {
     if (initialData) {
-      console.log("Setting form data with initialData:", initialData);
-
       // Process the category and volunteer IDs
       let categoryIds = [];
       let volunteerIds = [];
 
-      // Handle categoryIds - check for 'categories' array of objects or direct categoryIds
+      // Handle categoryIds - check for categories
       if (initialData.categoryIds && Array.isArray(initialData.categoryIds)) {
         categoryIds = initialData.categoryIds.map((id) => id.toString());
       } else if (
@@ -118,7 +114,7 @@ const EditEventForm = ({
         categoryIds = initialData.categories.map((c) => c.id.toString());
       }
 
-      // Handle volunteerIds - check for 'volunteers' array of objects or direct volunteerIds
+      // Handle volunteerIds - check for volunteers
       if (initialData.volunteerIds && Array.isArray(initialData.volunteerIds)) {
         volunteerIds = initialData.volunteerIds.map((id) => id.toString());
       } else if (
@@ -134,7 +130,7 @@ const EditEventForm = ({
       // Format the date properly (backend might return full datetime)
       let formattedDate = initialData.date;
       if (formattedDate && formattedDate.includes("T")) {
-        formattedDate = formattedDate.split("T")[0]; // Get just the date part
+        formattedDate = formattedDate.split("T")[0];
       }
 
       // Reset the form with the initial data
@@ -147,11 +143,6 @@ const EditEventForm = ({
         categoryIds: categoryIds,
         volunteerIds: volunteerIds,
       });
-
-      console.log(
-        "Form reset with initial data. Current values:",
-        form.getValues()
-      );
     }
   }, [initialData, form]);
 
@@ -180,8 +171,6 @@ const EditEventForm = ({
       //UPDATE existing event
       if (initialData?.id) {
         //Set up the code to update the event
-        console.log(`Updating Event with ID: ${initialData.id}`);
-
         response = await axios.patch(
           `${apiURL}/events/${initialData.id}`,
           backendData
@@ -215,15 +204,6 @@ const EditEventForm = ({
           error.response.data?.details ||
           "Server error occurred";
         alert(`Error: ${errorMessage}`);
-
-        //Log for errors/bugging...
-        console.error("Full error response:", {
-          status: error.response.status,
-          data: error.response.data,
-          url: error.config?.url,
-          method: error.config?.method,
-          sentData: backendData,
-        });
       } else if (error.request) {
         alert(
           "Error: Unable to connect to server. Please check your connection."
@@ -244,40 +224,6 @@ const EditEventForm = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {process.env.NODE_ENV === "development" && (
-          <div className="mb-4 p-3 bg-gray-100 rounded text-xs">
-            <strong>Debug Info:</strong>
-            <div>Mode: {initialData?.id ? "EDIT" : "CREATE"}</div>
-            <div>Has Initial Data: {initialData ? "YES" : "NO"}</div>
-            <div>
-              Initial Data Keys:{" "}
-              {initialData ? Object.keys(initialData).join(", ") : "None"}
-            </div>
-            <div>
-              Initial Title/Name:{" "}
-              {initialData?.title || initialData?.name || "None"}
-            </div>
-            <div>Form Name Value: {watchedValues.name || "Empty"}</div>
-            <div>
-              Form Description Value: {watchedValues.description || "Empty"}
-            </div>
-            <div>Form Date Value: {watchedValues.date || "Empty"}</div>
-            <div>
-              Initial CategoryIds: {JSON.stringify(initialData?.categoryIds)}
-            </div>
-            <div>
-              Current Form CategoryIds:{" "}
-              {JSON.stringify(watchedValues.categoryIds)}
-            </div>
-            <div>
-              Initial VolunteerIds: {JSON.stringify(initialData?.volunteerIds)}
-            </div>
-            <div>
-              Current Form VolunteerIds:{" "}
-              {JSON.stringify(watchedValues.volunteerIds)}
-            </div>
-          </div>
-        )}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(saveEvent)} className="space-y-6">
             <FormField
@@ -457,7 +403,7 @@ const EditEventForm = ({
                       </p>
                     </div>
                   ) : (
-                    <div className="max-h-64 overflow-y-auto p-3 space-y-3 border rounded-lg">
+                    <div className="p-3 space-y-3 border rounded-lg">
                       {volunteers.map((volunteer) => {
                         const volunteerIdStr = volunteer.id.toString();
                         const isChecked = field.value?.includes(volunteerIdStr);

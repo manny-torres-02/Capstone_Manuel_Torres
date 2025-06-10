@@ -58,7 +58,7 @@ const EditVolunteerPage = () => {
       setVolunteerData(updatedVolunteer);
       alert("Volunteer updated successfully!");
     } else {
-      // Try 2: Re-fetch from server to ensure consistency if 1st chance didnt work...
+      // Try 2: Re-fetch from server to ensure consistency if 1st chance didnt work
       try {
         const response = await axios.get(`${apiURL}/volunteers/${id}`);
         setVolunteerData(response.data);

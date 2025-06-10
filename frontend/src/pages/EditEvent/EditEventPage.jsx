@@ -76,7 +76,7 @@ const EditEventPage = () => {
     navigate("/");
   };
 
-  //Make sure the backend data is correct...
+  //Make sure the backend data is right. 
   useEffect(() => {
     const fetchEvent = async () => {
       if (!id) {
@@ -112,7 +112,6 @@ const EditEventPage = () => {
 
         setEventData(response.data);
       } catch (error) {
-        // ... error handling
       } finally {
         setLoading(false);
       }

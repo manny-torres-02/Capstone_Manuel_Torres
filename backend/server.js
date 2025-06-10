@@ -5,6 +5,8 @@ import volunteers from "./routes/volunteers.js";
 import events from "./routes/events.js";
 import db from "./knexconfig.js"; //TODO: Remove if unneeded.
 import categories from "./routes/categories.js";
+import emailRoutes from "./routes/email.js";
+// const emailRoutes = require("./routes/email");
 
 dotenv.config();
 
@@ -42,6 +44,9 @@ app.use("/volunteers", volunteers);
 app.use("/events", events);
 
 app.use("/categories", categories);
+
+app.use("/email", emailRoutes);
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

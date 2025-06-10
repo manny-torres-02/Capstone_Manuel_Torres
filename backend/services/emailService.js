@@ -1,4 +1,4 @@
-const { SESClient, SendEmailCommand } = require("@aws-sdk/client-ses");
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
 // START SES
 //Credentials loaded from AWS File
@@ -70,4 +70,4 @@ class EmailService {
   }
 }
 
-module.exports = new EmailService();
+export default new EmailService();

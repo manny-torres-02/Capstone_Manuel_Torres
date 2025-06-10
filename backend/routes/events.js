@@ -61,7 +61,7 @@ router.get("/:eventId", async (req, res) => {
           "categories.id",
           "event_categories.category_id"
         )
-        .where("event_categories.event_id", eventId), // Use eventId directly
+        .where("event_categories.event_id", eventId),
 
       // get volunteers
       knex("volunteers")
@@ -100,6 +100,7 @@ router.post("/", async (req, res) => {
     volunteerIds = [],
   } = req.body;
 
+  //Check name and Date
   if (!name && !date) {
     return res.status(400).json({ message: "Name and date are required" });
   } else if (!name) {
@@ -107,7 +108,7 @@ router.post("/", async (req, res) => {
   } else if (!date) {
     return res.status(400).json({ message: "Date is required" });
   }
-
+  //basic check for year month day format
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return res
       .status(400)
@@ -115,7 +116,6 @@ router.post("/", async (req, res) => {
   }
 
   console.log("made it past validations ");
-  //set up the transaction
   let trx;
 
   try {
@@ -194,18 +194,18 @@ router.post("/", async (req, res) => {
   }
 });
 
-//TODO: TEST THIS
 router.delete("/:eventId", async (req, res) => {
   const { eventId } = req.params;
   let trx;
 
   try {
     trx = await knex.transaction();
-    //Delete the associated category/volunteers from the joint tables
+    //1. Delete the associated category/volunteers from the joint tables
+    //Since these are the linked tables, this needs to be handled first
     await trx("event_categories").where("event_id", eventId).del();
     await trx("volunteer_events").where("event_id", eventId).del();
 
-    //delete the event from the main table...
+    //2. delete the event from the main table...
     const deleteEvent = await trx("events").where("id", eventId).del();
 
     if (deleteEvent === 0) {
@@ -264,7 +264,7 @@ router.patch("/:eventId", async (req, res) => {
         .json({ message: "Invalid date format. Use YYYY-MM-DD" });
     }
 
-    //Apply updates where needed..
+    //Apply updates where posisble
     if (Object.keys(updates).length > 0) {
       await trx("events").where({ id: eventId }).update(updates);
     }
@@ -294,7 +294,7 @@ router.patch("/:eventId", async (req, res) => {
 
     // Handle volunteer assignments if provided
     if (volunteerIds !== undefined) {
-      // First delete existing volunteer relationships
+      //1.  delete existing volunteer relationships
       await trx("volunteer_events").where({ event_id: eventId }).del();
 
       // Then add new ones if there are any

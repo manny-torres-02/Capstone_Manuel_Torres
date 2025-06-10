@@ -4,14 +4,6 @@ const knex = initKnex(configuration);
 import express from "express";
 const router = express.Router();
 
-// TODO: When you delete a volunteer, you need to delete the associated entry in the categories, and the (Done)
-//TODO: when you edit a volunteer you need to make sure you can run the edit to the junction table... (done)
-//TODO: Research on when you delete volunteer, for example, volunteer 9, then add a new volunteeer, why isnt the new volunteer coming up with the id: 9
-//TODO:Should I Add indexes into the junction tables?
-//index(["volunteer_id", "category_id"], "vol_cat_idx");
-
-//Using transactions in order to update tables. This will make sure that if one item fails in an update, the entire scenario fails.
-
 // Handle  the assignments to junction tables and then
 async function handleAssignments(
   trx,
@@ -19,13 +11,13 @@ async function handleAssignments(
   categoryIds = [],
   eventIds = []
 ) {
-  // Validate inputs
+  //1. Validate inputs
   if (!volunteerId) throw new Error("Missing volunteerId");
   if (!Array.isArray(categoryIds) || !Array.isArray(eventIds)) {
     throw new Error("categoryIds and eventIds must be arrays");
   }
 
-  // Validate categories exist (empty array bypasses check)
+  //2. Validate categories exist (empty array bypasses check)
   if (categoryIds.length > 0) {
     const validCategories = await trx("categories")
       .select("id")
@@ -202,7 +194,10 @@ router.delete("/:id", async (req, res) => {
     await knex("volunteer_events").where("volunteer_id", id).del();
     await knex("volunteer_categories").where("volunteer_id", id).del();
 
-    const deleteVolunteer = await knex("volunteers").where({ id }).del(); //del returns # of deleted rows, technically truthy, but not a boolean.
+    const deleteVolunteer = await knex("volunteers").where({ id }).del();
+    //del returns # of deleted rows, technically truthy, but not a boolean.
+    //Need to see if Delete volunteer is > 0
+    //if greater than 0, it should return a positive status, otherwise state the volunteer id does not exist.
     if (deleteVolunteer > 0) {
       res.sendStatus(204);
     } else {
@@ -213,6 +208,7 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error: "internal server Error" });
   }
 });
+
 //update the volunteer
 router.patch("/:volunteerId", async (req, res) => {
   const { volunteerId } = req.params;
@@ -251,15 +247,5 @@ router.patch("/:volunteerId", async (req, res) => {
     res.status(statusCode).json({ error: err.message });
   }
 });
-
-// TODO: Get the Volunteer Categories
-//get the volunteer categories
-// router.get("/", async (_req, res) => {
-//   try {
-//     const volunteerCategories = await knex("volunteer_categories");
-//   } catch (err) {
-//     res.status(400).send(`Error retrieving Users Category: ${err}`);
-//   }
-// });
 
 export default router;

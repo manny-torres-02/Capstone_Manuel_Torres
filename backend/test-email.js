@@ -7,7 +7,7 @@ async function testEmail() {
 
   try {
     const result = await emailService.sendEmail({
-      to: "manueljosetorres02@gmail.com", // Send to yourself first
+      to: "manueljosetorres02@gmail.com",
       subject: "🎉 Test Email from Volunteer System",
       body: `
         Hello!
@@ -24,11 +24,11 @@ async function testEmail() {
     });
 
     if (result.success) {
-      console.log("✅ Email sent successfully!");
-      console.log("📧 Message ID:", result.messageId);
-      console.log("📮 Check your email inbox!");
+      console.log("Email sent successfully!");
+      console.log("Message ID:", result.messageId);
+      console.log("Check your email inbox!");
     } else {
-      console.log("❌ Email failed to send:");
+      console.log("Email failed to send:");
       console.log("Error:", result.error);
     }
   } catch (error) {
@@ -38,4 +38,3 @@ async function testEmail() {
 
 // Run the test
 testEmail();
-

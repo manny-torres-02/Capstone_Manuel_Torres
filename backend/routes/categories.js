@@ -51,11 +51,12 @@ router.delete("/:categoryId", async (req, res) => {
   try {
     trx = await knex.transaction();
 
-    // First, delete entries from junction tables
+    //1. delete entries from junction tables
+    //Since the these are the linked tables, need to always manage these first.
     await trx("volunteer_categories").where("category_id", categoryId).del();
     await trx("event_categories").where("category_id", categoryId).del();
 
-    // Then delete the category itself
+    // 2.Then delete the category itself.
     const deleteCount = await trx("categories").where("id", categoryId).del();
 
     if (deleteCount === 0) {
@@ -66,7 +67,8 @@ router.delete("/:categoryId", async (req, res) => {
     }
 
     await trx.commit();
-    res.sendStatus(204); // No content (successful deletion)
+    //delete successfully.
+    res.sendStatus(204);
   } catch (error) {
     if (trx) await trx.rollback();
     console.error(`Delete failed for category ${categoryId}:`, error);

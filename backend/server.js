@@ -3,9 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import volunteers from "./routes/volunteers.js";
 import events from "./routes/events.js";
-import db from "./knexconfig.js"; //TODO: Remove if unneeded.
 import categories from "./routes/categories.js";
 import emailRoutes from "./routes/email.js";
+1;
 // const emailRoutes = require("./routes/email");
 
 dotenv.config();
@@ -13,8 +13,6 @@ dotenv.config();
 const port = process.env.PORT || 8080;
 // const port = 8080;
 //TODO: uncomment once the db works
-// const DB_HOST = process.env.DB_HOST || "http://localhost";
-// const express = require("express");
 const app = express();
 
 const { CORS_ORIGIN } = process.env;

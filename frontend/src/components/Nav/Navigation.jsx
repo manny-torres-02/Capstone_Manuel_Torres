@@ -142,11 +142,18 @@ const Navigation = () => {
               </Link>
 
               <Link
-                to="/createVolunteer"
+                to="/createEvent"
                 className="block px-2 py-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Create an Event
+              </Link>
+              <Link
+                to="/showEvents"
+                className="block px-2 py-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Show Events
               </Link>
               <Link
                 to="/email"

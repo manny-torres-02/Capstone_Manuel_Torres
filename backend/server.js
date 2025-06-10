@@ -5,7 +5,7 @@ import volunteers from "./routes/volunteers.js";
 import events from "./routes/events.js";
 import categories from "./routes/categories.js";
 import emailRoutes from "./routes/email.js";
-1;
+
 // const emailRoutes = require("./routes/email");
 
 dotenv.config();

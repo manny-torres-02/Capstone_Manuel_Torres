@@ -26,6 +26,11 @@ const emailFormSchema = z.object({
 });
 
 const EmailForm = ({ initialData, onSubmit, onCancel, loading = false }) => {
+  const apiURL = import.meta.env.VITE_APP_API_URL || "http://localhost:8080";
+  const [volunteers, setVolunteers] = useState([]);
+  const [loadingVolunteers, setLoadingVolunteers] = useState(true);
+  const [sending, setSending] = useState(false);
+
   // Define the form
   const form = useForm({
     resolver: zodResolver(emailFormSchema),
@@ -36,16 +41,48 @@ const EmailForm = ({ initialData, onSubmit, onCancel, loading = false }) => {
     },
   });
 
+  useEffect(() => {
+    const fetchVolunteers = async () => {
+      try {
+        const response = await axios.get(`${apiURL}/email/volunteers`);
+        setVolunteers(response.data);
+      } catch (error) {
+        console.error("Error fetching volunteers:", error);
+        setVolunteers([]);
+      } finally {
+        setLoadingVolunteers(false);
+      }
+    };
+
+    fetchVolunteers();
+  }, [apiURL]);
+
   //set up event handler.
   const handleSubmit = async (formData) => {
     console.log("Email form submitted:", formData);
+    setSending(true);
 
     try {
+      const response = await axios.post(`${apiURL}/email/send`, {
+        subject: formData.emailSubject,
+        message: formData.emailMessage,
+        recipientIds: formData.recipients,
+      });
+
+      console.log("Email sent successfully:", response.data);
+      alert(`Email sent successfully! ${response.data.message}`);
+
       if (onSubmit) {
         onSubmit(formData);
       }
+
+      // Reset form
+      form.reset();
     } catch (error) {
       console.error("Error sending email:", error);
+      alert("Failed to send email. Please try again.");
+    } finally {
+      setSending(false);
     }
   };
 
@@ -53,7 +90,10 @@ const EmailForm = ({ initialData, onSubmit, onCancel, loading = false }) => {
     <>
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle>EMAIL FORM</CardTitle>
+          <CardTitle>Send Email to Volunteers</CardTitle>
+          <p className="text-muted-foreground">
+            Compose and send emails to selected volunteers
+          </p>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -88,6 +128,92 @@ const EmailForm = ({ initialData, onSubmit, onCancel, loading = false }) => {
                         {...field}
                       />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="recipients"
+                render={() => (
+                  <FormItem>
+                    <div className="mb-4">
+                      <FormLabel className="text-base">
+                        Select Recipients
+                      </FormLabel>
+                      <FormDescription>
+                        Choose volunteers to send the email to.
+                      </FormDescription>
+                    </div>
+
+                    {loadingVolunteers ? (
+                      <div className="text-center py-4">
+                        <p className="text-muted-foreground">
+                          Loading volunteers...
+                        </p>
+                      </div>
+                    ) : volunteers.length === 0 ? (
+                      <div className="text-center py-4">
+                        <p className="text-muted-foreground">
+                          No volunteers with email addresses found.
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="border rounded-lg p-3">
+                        <div className="max-h-64 overflow-y-auto space-y-3">
+                          {volunteers.map((volunteer) => (
+                            <FormField
+                              key={volunteer.id}
+                              control={form.control}
+                              name="recipients"
+                              render={({ field }) => {
+                                const volunteerIdStr = volunteer.id.toString();
+                                const isChecked =
+                                  field.value?.includes(volunteerIdStr);
+
+                                return (
+                                  <FormItem
+                                    key={volunteer.id}
+                                    className="flex flex-row items-start space-x-3 space-y-0 border rounded-lg p-3 hover:bg-gray-50 transition-colors"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={isChecked}
+                                        onCheckedChange={(checked) => {
+                                          const currentValues =
+                                            field.value || [];
+                                          if (checked) {
+                                            field.onChange([
+                                              ...currentValues,
+                                              volunteerIdStr,
+                                            ]);
+                                          } else {
+                                            field.onChange(
+                                              currentValues.filter(
+                                                (value) =>
+                                                  value !== volunteerIdStr
+                                              )
+                                            );
+                                          }
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <div className="space-y-1 leading-none flex-1">
+                                      <FormLabel className="text-sm font-medium cursor-pointer">
+                                        {volunteer.name}
+                                      </FormLabel>
+                                      <p className="text-xs text-muted-foreground">
+                                        {volunteer.email}
+                                      </p>
+                                    </div>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
